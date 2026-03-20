@@ -1,4 +1,4 @@
-# PetaGuía 🐾
+# PetsGuía 🐾
 
 Blog de mascotas con publicación automática diaria usando la API de Anthropic.
 
