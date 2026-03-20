@@ -126,23 +126,21 @@ def generate_article(cat: str, topic: str) -> dict:
     """Llama a la API de Anthropic y devuelve los campos del artículo."""
     client = anthropic.Anthropic(api_key=API_KEY)
 
-    prompt = f"""Eres un experto en mascotas y veterinaria. 
+    prompt = f"""Eres un experto en mascotas y veterinaria.
 Escribí un artículo de blog en español sobre "{topic}" en la categoría "{cat}".
 
-FORMATO DE RESPUESTA — devolvé ÚNICAMENTE un objeto JSON válido con esta estructura:
-{{
-  "title": "Título atractivo y con keyword (máx 70 caracteres)",
-  "excerpt": "Resumen de 2 frases para el listado del blog (máx 160 caracteres)",
-  "readTime": "N",
-  "content": "HTML completo del artículo con etiquetas <h2>, <p> y <ul>/<li>. Mínimo 600 palabras. Sin <html>, <body> ni <style>."
-}}
+INSTRUCCIÓN CRÍTICA: Respondé ÚNICAMENTE con un objeto JSON válido. Sin texto antes ni después. Sin bloques de código. Sin comillas triples. Solo el JSON puro empezando con {{ y terminando con }}.
 
-Requisitos del artículo:
-- Lenguaje claro, accesible y cálido para dueños hispanohablantes
+Estructura exacta:
+{{"title": "Título atractivo con keyword, máx 70 caracteres","excerpt": "Resumen de 2 frases, máx 160 caracteres","readTime": "5","content": "HTML del artículo aquí"}}
+
+Requisitos del campo content:
+- Mínimo 600 palabras en HTML
+- Usar etiquetas <h2>, <p>, <ul>, <li>
+- Sin <html>, <body> ni <style>
 - Al menos 3 subtítulos H2
-- Incluir datos concretos y consejos prácticos
-- Terminar con un párrafo de conclusión o llamado a la acción
-- No usar markdown, solo HTML dentro del campo "content"
+- Consejos prácticos y datos concretos
+- Las comillas dentro del HTML deben ser escapadas como \\"
 """
 
     message = client.messages.create(
@@ -153,11 +151,24 @@ Requisitos del artículo:
 
     raw = message.content[0].text.strip()
 
-    # Limpiar posibles bloques de código markdown
+    # Limpiar bloques de código markdown
     raw = re.sub(r"^```json\s*", "", raw)
+    raw = re.sub(r"^```\s*", "", raw)
     raw = re.sub(r"\s*```$", "", raw)
 
-    data = json.loads(raw)
+    # Extraer solo el objeto JSON (desde { hasta el último })
+    match = re.search(r"\{.*\}", raw, re.DOTALL)
+    if not match:
+        raise ValueError(f"No se encontró JSON en la respuesta: {raw[:200]}")
+    raw = match.group(0)
+
+    # Intentar parsear; si falla, loguear el raw para debug
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as e:
+        print(f"RAW RESPONSE:\n{raw[:500]}")
+        raise e
+
     return data
 
 
