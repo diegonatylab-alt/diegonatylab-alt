@@ -212,15 +212,25 @@ def generate_article(cat, topic):
     client = anthropic.Anthropic(api_key=API_KEY)
 
     prompt = (
-        f'Eres un experto en mascotas. Escribí un artículo en español sobre "{topic}" '
-        f'para la categoría "{cat}".\n\n'
+        f'Eres un experto en SEO y mascotas. Escribí un artículo optimizado para Google en español '
+        f'sobre "{topic}" para la categoría "{cat}".\n\n'
+        'REGLAS SEO OBLIGATORIAS:\n'
+        '- El título debe comenzar con la keyword principal (ej: "Cómo bañar a un perro: guía paso a paso")\n'
+        '- El título debe tener entre 50 y 60 caracteres para no cortarse en Google\n'
+        '- El excerpt es la meta description: debe incluir la keyword, ser persuasivo y tener entre 120 y 155 caracteres\n'
+        '- Los subtítulos H2 deben ser preguntas o frases que la gente realmente busca en Google\n'
+        '- El primer párrafo debe incluir la keyword principal en las primeras 100 palabras\n'
+        '- Incluir al menos un H2 con formato "¿Por qué..." o "¿Cuándo..." o "¿Cómo..."\n'
+        '- El artículo debe tener mínimo 700 palabras para posicionar bien\n'
+        '- Usar listas <ul> con al menos 4 ítems concretos y accionables\n'
+        '- Terminar con un H2 de conclusión o llamado a la acción\n\n'
         'RESPONDE ÚNICAMENTE con JSON puro. Sin texto antes ni después. Sin bloques de código. '
         'Sin comillas triples. Solo el objeto JSON.\n\n'
         'Estructura exacta (respeta las comillas dobles en todas las claves y valores):\n'
-        '{"title":"Título atractivo máx 70 caracteres",'
-        '"excerpt":"Resumen 2 frases máx 160 caracteres",'
-        '"readTime":"5",'
-        '"content":"HTML del artículo aquí con h2 p ul li. Mínimo 500 palabras. '
+        '{"title":"Keyword principal al inicio, máx 60 caracteres",'
+        '"excerpt":"Meta description con keyword, entre 120 y 155 caracteres, persuasiva",'
+        '"readTime":"6",'
+        '"content":"HTML del artículo con h2 p ul li. Mínimo 700 palabras. '
         'Sin html body style. Las comillas dentro del HTML deben ser \\u0022 o evitadas."}'
     )
 
