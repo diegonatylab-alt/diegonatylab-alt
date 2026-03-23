@@ -953,7 +953,7 @@
       }
 
       grid.innerHTML = filtered.map(a => `
-        <a href="${a.slug ? `articulos/${a.slug}.html` : '#'}" class="article-card">
+        <a href="${a.slug ? `articulos/${a.slug}/` : '#'}" class="article-card">
           <div class="article-thumb" style="${a.image ? '' : `background: linear-gradient(135deg, ${catColor(a.category)}22, ${catColor(a.category)}44)`}">
             ${a.image ? `<img src="${a.image}" alt="${a.title}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"/>` : a.emoji}
           </div>
@@ -982,7 +982,7 @@
     function renderFeatured() {
       const a = articles.find(x => x.featured) || articles[0];
       if (!a) return;
-      const featuredUrl = a.slug ? `articulos/${a.slug}.html` : '#';
+      const featuredUrl = a.slug ? `articulos/${a.slug}/` : '#';
       document.getElementById('featured-link').setAttribute('href', featuredUrl);
       document.getElementById('featured-link').removeAttribute('onclick');
       const featuredImg = document.getElementById('featured-emoji');
@@ -1002,7 +1002,7 @@
     function renderPopular() {
       const list = document.getElementById('popular-list');
       list.innerHTML = articles.slice(0,5).map((a,i) => `
-        <a href="${a.slug ? `articulos/${a.slug}.html` : '#'}" class="popular-item" style="cursor:pointer;text-decoration:none;">
+        <a href="${a.slug ? `articulos/${a.slug}/` : '#'}" class="popular-item" style="cursor:pointer;text-decoration:none;">
           <span class="popular-num">0${i+1}</span>
           <span class="popular-title">${a.title}</span>
         </a>
