@@ -194,8 +194,8 @@ def fetch_unsplash_image(cat, topic):
             return None
         photo = random.choice(results[:5])
         return {
-            "url":        photo["urls"]["regular"],
-            "thumb":      photo["urls"]["small"],
+            "url":        photo["urls"]["regular"] + "&w=800&q=75&fm=webp&fit=crop",
+            "thumb":      photo["urls"]["small"] + "&w=400&q=70&fm=webp&fit=crop",
             "alt":        photo.get("alt_description") or query,
             "author":     photo["user"]["name"],
             "author_url": photo["user"]["links"]["html"],
@@ -211,6 +211,7 @@ def build_image_html(image):
     return (
         f'<figure style="margin:0 0 28px 0;">'
         f'<img src="{image["url"]}" alt="{image["alt"]}" '
+        f'width="800" height="420" '
         f'style="width:100%;border-radius:10px;max-height:420px;object-fit:cover;" loading="lazy"/>'
         f'<figcaption style="font-size:0.75rem;color:#888;margin-top:6px;">'
         f'Foto de <a href="{image["author_url"]}?utm_source=petsguia&utm_medium=referral" '
@@ -547,7 +548,7 @@ def main():
         "date":     date_str,
         "readTime": str(new_data.get("readTime", "5")),
         "featured": False,
-        "image":    image["thumb"] if image else "",
+        "image":    image["url"] if image else "",
         "content":  content_with_image,
         "url":      f"/{ARTICLES_DIR}/{slug}/",
     }
