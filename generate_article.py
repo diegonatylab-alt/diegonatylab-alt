@@ -228,8 +228,8 @@ def generate_article(cat, topic):
     client = anthropic.Anthropic(api_key=API_KEY)
 
     prompt = (
-        f'Eres un experto en SEO y mascotas. Escribí un artículo optimizado para Google en español '
-        f'sobre "{topic}" para la categoría "{cat}".\n\n'
+        f'Eres un experto en SEO y mascotas. Escribí un artículo optimizado y original para Google en español '
+        f'sobre "{topic}" para la categoría "{cat}" que no se encuentre trillado.\n\n'
         'REGLAS SEO OBLIGATORIAS:\n'
         '- El título debe comenzar con la keyword principal (ej: "Cómo bañar a un perro: guía paso a paso")\n'
         '- El título debe tener entre 50 y 60 caracteres para no cortarse en Google\n'
