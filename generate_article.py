@@ -384,6 +384,7 @@ def generate_article_html(article):
     .footer-links{{display:flex;gap:20px;font-size:0.85rem;}}
     .footer-links a:hover{{color:white;}}
     @media(max-width:600px){{nav{{display:none;}}}}
+    .icon{{display:inline-block;width:16px;height:16px;vertical-align:-2px;margin-right:4px;}}
   </style>
 </head>
 <body>
@@ -401,13 +402,13 @@ def generate_article_html(article):
   <span class="tag">{category}</span>
   <h1>{title}</h1>
   <div class="article-meta">
-    <span>📅 {date}</span>
-    <span>⏱ {read_time} min de lectura</span>
-    <span>{emoji} {category}</span>
+    <span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>{date}</span>
+    <span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>{read_time} min de lectura</span>
+    <span>{category}</span>
   </div>
-  <div class="ad-block">📢 Google AdSense — 728×90</div>
+  <div class="ad-block">Google AdSense — 728×90</div>
   <div class="article-content">{content}</div>
-  <div class="ad-block" style="margin-top:32px;">📢 Google AdSense — 300×250</div>
+  <div class="ad-block" style="margin-top:32px;">Google AdSense — 300×250</div>
 </div>
 <footer>
   <div class="footer-inner">
