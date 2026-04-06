@@ -579,6 +579,9 @@
       .articles-grid { grid-template-columns: 1fr; }
       nav { display: none; }
     }
+    .icon { display: inline-block; width: 16px; height: 16px; vertical-align: -2px; margin-right: 4px; }
+    .icon-lg { width: 20px; height: 20px; vertical-align: -4px; }
+    .icon-xl { width: 24px; height: 24px; vertical-align: -5px; }
   </style>
 </head>
 <body>
@@ -601,15 +604,15 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-content">
-        <span class="hero-badge">🐾 Tu guía de mascotas</span>
+        <span class="hero-badge"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="8" cy="8" rx="2" ry="3"/><ellipse cx="16" cy="8" rx="2" ry="3"/><ellipse cx="5" cy="14" rx="2" ry="2.5"/><ellipse cx="19" cy="14" rx="2" ry="2.5"/><path d="M12 18c-4 0-6-2-6-4s2-4 6-4 6 2 6 4-2 4-6 4z"/></svg>Tu guía de mascotas</span>
         <h1>Todo lo que tu <em>mascota</em> necesita saber</h1>
         <p>Guías expertas sobre cuidados, salud, alimentación y comportamiento para cada tipo de animal.</p>
         <div class="hero-cats">
-          <span class="hero-cat" onclick="filterCat('Perros')">🐶 Perros</span>
-          <span class="hero-cat" onclick="filterCat('Gatos')">🐱 Gatos</span>
-          <span class="hero-cat" onclick="filterCat('Aves')">🦜 Aves</span>
-          <span class="hero-cat" onclick="filterCat('Reptiles')">🦎 Reptiles</span>
-          <span class="hero-cat" onclick="filterCat('Exóticas')">🐇 Exóticas</span>
+          <span class="hero-cat" onclick="filterCat('Perros')">Perros</span>
+          <span class="hero-cat" onclick="filterCat('Gatos')">Gatos</span>
+          <span class="hero-cat" onclick="filterCat('Aves')">Aves</span>
+          <span class="hero-cat" onclick="filterCat('Reptiles')">Reptiles</span>
+          <span class="hero-cat" onclick="filterCat('Exóticas')">Exóticas</span>
         </div>
       </div>
     </section>
@@ -617,7 +620,7 @@
     <!-- AD BANNER (oculto hasta activar AdSense) -->
     <div style="display:none; padding: 16px 24px; justify-content:center;">
       <div class="ad-banner">
-        📢 Espacio publicitario — Google AdSense 728×90
+        Espacio publicitario — Google AdSense 728×90
       </div>
     </div>
 
@@ -632,13 +635,13 @@
           </div>
 
           <a href="#" class="featured-card" onclick="openArticle(0); return false;" id="featured-link">
-            <div class="featured-img" id="featured-emoji">🐶</div>
+            <div class="featured-img" id="featured-emoji"></div>
             <div class="featured-body">
               <span class="tag" id="featured-tag">Perros</span>
               <h3 class="card-title" id="featured-title">Cómo enseñarle a tu perro a quedarse solo en casa sin ansiedad</h3>
               <p class="card-excerpt" id="featured-excerpt">La separación es uno de los mayores desafíos para los perros domésticos. Descubrí técnicas probadas para que tu perro aprenda a estar solo de forma tranquila y segura.</p>
               <span class="read-more">Leer artículo</span>
-              <div class="card-meta" id="featured-meta">📅 18 de marzo, 2026 · ⏱ 6 min de lectura</div>
+      <div class="card-meta" id="featured-meta"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>18 de marzo, 2026 · <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>6 min de lectura</div>
             </div>
           </a>
 
@@ -657,20 +660,20 @@
 
           <!-- Ad widget (oculto hasta activar AdSense) -->
           <div class="ad-widget" style="display:none">
-            📢 Google AdSense<br>300×250
+            Google AdSense<br>300×250
           </div>
 
           <!-- Categories -->
           <div class="widget">
             <h3 class="widget-title">Categorías</h3>
             <ul class="cat-list">
-              <li><a href="#" onclick="filterCat('Perros')">🐶 Perros <span id="cnt-perros">0</span></a></li>
-              <li><a href="#" onclick="filterCat('Gatos')">🐱 Gatos <span id="cnt-gatos">0</span></a></li>
-              <li><a href="#" onclick="filterCat('Aves')">🦜 Aves <span id="cnt-aves">0</span></a></li>
-              <li><a href="#" onclick="filterCat('Reptiles')">🦎 Reptiles <span id="cnt-reptiles">0</span></a></li>
-              <li><a href="#" onclick="filterCat('Exóticas')">🐇 Exóticas <span id="cnt-exoticas">0</span></a></li>
-              <li><a href="#" onclick="filterCat('Salud')">💊 Salud <span id="cnt-salud">0</span></a></li>
-              <li><a href="#" onclick="filterCat('Alimentación')">🍖 Alimentación <span id="cnt-alim">0</span></a></li>
+              <li><a href="#" onclick="filterCat('Perros')">Perros <span id="cnt-perros">0</span></a></li>
+              <li><a href="#" onclick="filterCat('Gatos')">Gatos <span id="cnt-gatos">0</span></a></li>
+              <li><a href="#" onclick="filterCat('Aves')">Aves <span id="cnt-aves">0</span></a></li>
+              <li><a href="#" onclick="filterCat('Reptiles')">Reptiles <span id="cnt-reptiles">0</span></a></li>
+              <li><a href="#" onclick="filterCat('Exóticas')">Exóticas <span id="cnt-exoticas">0</span></a></li>
+              <li><a href="#" onclick="filterCat('Salud')">Salud <span id="cnt-salud">0</span></a></li>
+              <li><a href="#" onclick="filterCat('Alimentación')">Alimentación <span id="cnt-alim">0</span></a></li>
             </ul>
           </div>
 
@@ -691,18 +694,18 @@
     <span class="tag" id="art-tag">Perros</span>
     <h1 id="art-title">Título del artículo</h1>
     <div class="article-meta">
-      <span id="art-date">📅 18 de marzo, 2026</span>
-      <span id="art-read">⏱ 6 min de lectura</span>
-      <span id="art-cat">🐶 Perros</span>
+      <span id="art-date"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>18 de marzo, 2026</span>
+      <span id="art-read"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>6 min de lectura</span>
+      <span id="art-cat">Perros</span>
     </div>
 
     <!-- In-article ad (oculto hasta activar AdSense) -->
-    <div class="in-article-ad" style="display:none">📢 Google AdSense — In-article 728×90</div>
+    <div class="in-article-ad" style="display:none">Google AdSense — In-article 728×90</div>
 
     <div class="article-content" id="art-content"></div>
 
     <!-- In-article ad 2 (oculto hasta activar AdSense) -->
-    <div class="in-article-ad" style="display:none; margin-top:32px;">📢 Google AdSense — In-article 300×250</div>
+    <div class="in-article-ad" style="display:none; margin-top:32px;">Google AdSense — In-article 300×250</div>
   </div>
 
   <footer>
@@ -1049,8 +1052,8 @@
             <p class="article-excerpt">${a.excerpt}</p>
           </div>
           <div class="article-footer">
-            <span class="article-date">📅 ${a.date}</span>
-            <span class="article-date">⏱ ${a.readTime} min</span>
+            <span class="article-date"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${a.date}</span>
+            <span class="article-date"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${a.readTime} min</span>
           </div>
         </a>
       `).join('');
@@ -1082,7 +1085,7 @@
       document.getElementById('featured-tag').textContent = a.category;
       document.getElementById('featured-title').textContent = a.title;
       document.getElementById('featured-excerpt').textContent = a.excerpt;
-      document.getElementById('featured-meta').innerHTML = `📅 ${a.date} · ⏱ ${a.readTime} min de lectura`;
+      document.getElementById('featured-meta').innerHTML = `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${a.date} · <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${a.readTime} min de lectura`;
     }
 
     function renderPopular() {
@@ -1115,9 +1118,9 @@
       ap.classList.add('active');
       document.getElementById('art-tag').textContent = a.category;
       document.getElementById('art-title').textContent = a.title;
-      document.getElementById('art-date').textContent = '📅 ' + a.date;
-      document.getElementById('art-read').textContent = '⏱ ' + a.readTime + ' min de lectura';
-      document.getElementById('art-cat').textContent = a.emoji + ' ' + a.category;
+      document.getElementById('art-date').innerHTML = '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' + a.date;
+      document.getElementById('art-read').innerHTML = '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + a.readTime + ' min de lectura';
+      document.getElementById('art-cat').textContent = a.category;
     
       // Agregar imagen al inicio si existe y el contenido no la tiene ya
       let contentHtml = a.content;
