@@ -1,0 +1,80 @@
+{
+  "perro": {
+    "rer_factor": 70,
+    "rer_exponent": 0.75,
+    "actividad": {
+      "sedentario":   {"factor": 1.2, "label": "Sedentario (poco ejercicio)"},
+      "moderado":     {"factor": 1.4, "label": "Moderado (paseos diarios)"},
+      "activo":       {"factor": 1.6, "label": "Activo (ejercicio intenso)"},
+      "muy_activo":   {"factor": 2.0, "label": "Muy activo (trabajo/deporte)"}
+    },
+    "etapa_vida": {
+      "cachorro_2_4":   {"factor": 3.0, "label": "Cachorro (2–4 meses)"},
+      "cachorro_4_12":  {"factor": 2.0, "label": "Cachorro (4–12 meses)"},
+      "adulto":         {"factor": 1.0, "label": "Adulto (1–7 años)"},
+      "senior":         {"factor": 0.8, "label": "Senior (7+ años)"},
+      "gestacion":      {"factor": 2.0, "label": "Gestación (última etapa)"},
+      "lactancia":      {"factor": 3.0, "label": "Lactancia"}
+    },
+    "condicion": {
+      "bajo_peso":  {"factor": 1.2, "label": "Bajo peso (necesita ganar)"},
+      "normal":     {"factor": 1.0, "label": "Peso ideal"},
+      "sobrepeso":  {"factor": 0.8, "label": "Sobrepeso (necesita bajar)"}
+    },
+    "marcas": [
+      {"nombre": "Royal Canin Medium Adult",    "kcal_kg": 3850, "tipo": "Premium"},
+      {"nombre": "Purina Pro Plan Adult",       "kcal_kg": 3750, "tipo": "Premium"},
+      {"nombre": "Hill's Science Diet Adult",   "kcal_kg": 3600, "tipo": "Premium"},
+      {"nombre": "Eukanuba Adult Medium",       "kcal_kg": 3800, "tipo": "Premium"},
+      {"nombre": "Pedigree Adult",              "kcal_kg": 3400, "tipo": "Económico"},
+      {"nombre": "Dog Chow Adult",              "kcal_kg": 3500, "tipo": "Económico"},
+      {"nombre": "Acana Adult Dog",             "kcal_kg": 3510, "tipo": "Super Premium"},
+      {"nombre": "Orijen Original",             "kcal_kg": 3860, "tipo": "Super Premium"},
+      {"nombre": "Taste of the Wild",           "kcal_kg": 3600, "tipo": "Super Premium"},
+      {"nombre": "Dieta BARF (cruda)",          "kcal_kg": 1500, "tipo": "Natural"}
+    ]
+  },
+  "gato": {
+    "rer_factor": 70,
+    "rer_exponent": 0.75,
+    "actividad": {
+      "interior":     {"factor": 1.0, "label": "Interior (solo en casa)"},
+      "moderado":     {"factor": 1.2, "label": "Moderado (juego diario)"},
+      "activo":       {"factor": 1.4, "label": "Activo (acceso exterior)"}
+    },
+    "etapa_vida": {
+      "gatito_2_4":    {"factor": 2.5, "label": "Gatito (2–4 meses)"},
+      "gatito_4_12":   {"factor": 2.0, "label": "Gatito (4–12 meses)"},
+      "adulto":        {"factor": 1.0, "label": "Adulto (1–10 años)"},
+      "senior":        {"factor": 0.8, "label": "Senior (10+ años)"},
+      "gestacion":     {"factor": 1.6, "label": "Gestación"},
+      "lactancia":     {"factor": 2.5, "label": "Lactancia"}
+    },
+    "condicion": {
+      "bajo_peso":  {"factor": 1.2, "label": "Bajo peso (necesita ganar)"},
+      "normal":     {"factor": 1.0, "label": "Peso ideal"},
+      "sobrepeso":  {"factor": 0.8, "label": "Sobrepeso (necesita bajar)"}
+    },
+    "marcas": [
+      {"nombre": "Royal Canin Indoor Adult",    "kcal_kg": 3700, "tipo": "Premium"},
+      {"nombre": "Purina Pro Plan Cat Adult",   "kcal_kg": 3800, "tipo": "Premium"},
+      {"nombre": "Hill's Science Diet Cat",     "kcal_kg": 3600, "tipo": "Premium"},
+      {"nombre": "Whiskas Adult",               "kcal_kg": 3400, "tipo": "Económico"},
+      {"nombre": "Cat Chow Adult",              "kcal_kg": 3500, "tipo": "Económico"},
+      {"nombre": "Acana Cat Indoor",            "kcal_kg": 3660, "tipo": "Super Premium"},
+      {"nombre": "Orijen Cat & Kitten",         "kcal_kg": 4060, "tipo": "Super Premium"},
+      {"nombre": "Taste of the Wild Cat",       "kcal_kg": 3600, "tipo": "Super Premium"},
+      {"nombre": "Dieta natural (cocida)",      "kcal_kg": 1200, "tipo": "Natural"}
+    ]
+  },
+  "tomas_por_dia": {
+    "cachorro_2_4": 4,
+    "cachorro_4_12": 3,
+    "gatito_2_4": 4,
+    "gatito_4_12": 3,
+    "adulto": 2,
+    "senior": 2,
+    "gestacion": 3,
+    "lactancia": 4
+  }
+}
