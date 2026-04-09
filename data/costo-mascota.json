@@ -1,0 +1,73 @@
+{
+  "paises": {
+    "mx": { "nombre": "México",    "moneda": "MXN", "simbolo": "$",  "flag": "🇲🇽" },
+    "ar": { "nombre": "Argentina", "moneda": "ARS", "simbolo": "$",  "flag": "🇦🇷" },
+    "co": { "nombre": "Colombia",  "moneda": "COP", "simbolo": "$",  "flag": "🇨🇴" },
+    "es": { "nombre": "España",    "moneda": "EUR", "simbolo": "€",  "flag": "🇪🇸" },
+    "cl": { "nombre": "Chile",     "moneda": "CLP", "simbolo": "$",  "flag": "🇨🇱" }
+  },
+  "calidad": {
+    "basico":  { "factor": 0.7,  "label": "Básico – lo esencial" },
+    "comodo":  { "factor": 1.0,  "label": "Cómodo – buena calidad" },
+    "premium": { "factor": 1.5,  "label": "Premium – lo mejor" }
+  },
+  "tamanos": {
+    "perro": [
+      { "id": "pequeño", "label": "Pequeño (menos de 10 kg)", "ejemplo": "Chihuahua, Pomerania, Yorkshire" },
+      { "id": "mediano", "label": "Mediano (10–25 kg)",       "ejemplo": "Beagle, Cocker, Bulldog Francés" },
+      { "id": "grande",  "label": "Grande (más de 25 kg)",    "ejemplo": "Labrador, Pastor Alemán, Golden" }
+    ],
+    "gato": [
+      { "id": "normal", "label": "Normal (3–6 kg)",      "ejemplo": "Siamés, Persa, Europeo común" },
+      { "id": "grande", "label": "Grande (más de 6 kg)",  "ejemplo": "Maine Coon, Ragdoll, Savannah" }
+    ]
+  },
+  "categorias": [
+    { "id": "alimentacion", "label": "Alimentación",       "icon": "🍖", "desc": "Alimento seco o húmedo mensual" },
+    { "id": "veterinario",  "label": "Veterinario",        "icon": "🩺", "desc": "Consultas, vacunas y desparasitación (mensualizado)" },
+    { "id": "higiene",      "label": "Higiene y grooming", "icon": "🧼", "desc": "Baños, cortes y productos" },
+    { "id": "accesorios",   "label": "Accesorios",         "icon": "🧸", "desc": "Juguetes, cama, transportadora (mensualizado)" },
+    { "id": "extras",       "label": "Extras",             "icon": "🦴", "desc": "Snacks, paseos, guardería" }
+  ],
+  "costos": {
+    "perro": {
+      "pequeño": {
+        "mx": { "alimentacion": 1000, "veterinario": 600,   "higiene": 400,   "accesorios": 250,   "extras": 350   },
+        "ar": { "alimentacion": 40000,"veterinario": 25000, "higiene": 15000, "accesorios": 10000, "extras": 15000 },
+        "co": { "alimentacion": 120000,"veterinario":80000, "higiene": 50000, "accesorios": 30000, "extras": 45000 },
+        "es": { "alimentacion": 40,   "veterinario": 25,    "higiene": 20,    "accesorios": 15,    "extras": 20    },
+        "cl": { "alimentacion": 30000,"veterinario": 18000, "higiene": 12000, "accesorios": 8000,  "extras": 12000 }
+      },
+      "mediano": {
+        "mx": { "alimentacion": 1600, "veterinario": 700,   "higiene": 500,   "accesorios": 300,   "extras": 500   },
+        "ar": { "alimentacion": 65000,"veterinario": 30000, "higiene": 20000, "accesorios": 12000, "extras": 20000 },
+        "co": { "alimentacion": 200000,"veterinario":100000,"higiene": 70000, "accesorios": 40000, "extras": 60000 },
+        "es": { "alimentacion": 60,   "veterinario": 30,    "higiene": 25,    "accesorios": 18,    "extras": 25    },
+        "cl": { "alimentacion": 48000,"veterinario": 22000, "higiene": 16000, "accesorios": 10000, "extras": 16000 }
+      },
+      "grande": {
+        "mx": { "alimentacion": 2400, "veterinario": 900,   "higiene": 700,   "accesorios": 400,   "extras": 650   },
+        "ar": { "alimentacion": 95000,"veterinario": 40000, "higiene": 28000, "accesorios": 16000, "extras": 28000 },
+        "co": { "alimentacion": 300000,"veterinario":130000,"higiene": 90000, "accesorios": 55000, "extras": 80000 },
+        "es": { "alimentacion": 85,   "veterinario": 40,    "higiene": 35,    "accesorios": 22,    "extras": 35    },
+        "cl": { "alimentacion": 72000,"veterinario": 30000, "higiene": 22000, "accesorios": 14000, "extras": 22000 }
+      }
+    },
+    "gato": {
+      "normal": {
+        "mx": { "alimentacion": 700,  "veterinario": 500,   "higiene": 200,   "accesorios": 200,   "extras": 250   },
+        "ar": { "alimentacion": 28000,"veterinario": 20000, "higiene": 8000,  "accesorios": 8000,  "extras": 10000 },
+        "co": { "alimentacion": 85000,"veterinario": 65000, "higiene": 25000, "accesorios": 25000, "extras": 30000 },
+        "es": { "alimentacion": 30,   "veterinario": 22,    "higiene": 10,    "accesorios": 12,    "extras": 15    },
+        "cl": { "alimentacion": 22000,"veterinario": 15000, "higiene": 6000,  "accesorios": 6000,  "extras": 8000  }
+      },
+      "grande": {
+        "mx": { "alimentacion": 1000, "veterinario": 600,   "higiene": 300,   "accesorios": 250,   "extras": 350   },
+        "ar": { "alimentacion": 40000,"veterinario": 25000, "higiene": 12000, "accesorios": 10000, "extras": 15000 },
+        "co": { "alimentacion": 120000,"veterinario":80000, "higiene": 35000, "accesorios": 30000, "extras": 45000 },
+        "es": { "alimentacion": 42,   "veterinario": 28,    "higiene": 15,    "accesorios": 15,    "extras": 20    },
+        "cl": { "alimentacion": 30000,"veterinario": 18000, "higiene": 9000,  "accesorios": 8000,  "extras": 12000 }
+      }
+    }
+  }
+}
