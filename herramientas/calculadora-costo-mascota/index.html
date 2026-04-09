@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>if(location.protocol!=='https:')location.replace('https://'+location.hostname+location.pathname+location.search);</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de costo mensual de mascota por país – PetsGuía</title>
+  <meta name="description" content="Estimá cuánto cuesta mantener un perro o gato por mes según tamaño, país y calidad de vida. Desglose por alimentación, veterinario, higiene y más."/>
+  <meta name="keywords" content="cuánto cuesta tener un perro, costo mensual mascota, presupuesto mascota, costo perro México, costo gato Argentina, gastos mascota"/>
+  <meta property="og:title" content="Calculadora de costo mensual de mascota – PetsGuía"/>
+  <meta property="og:description" content="Estimá cuánto cuesta mantener un perro o gato por mes según tamaño, país y calidad de vida."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://petsguia.com/herramientas/calculadora-costo-mascota/"/>
+  <link rel="canonical" href="https://petsguia.com/herramientas/calculadora-costo-mascota/"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap"/></noscript>
+  <link rel="stylesheet" href="/css/tools.css"/>
+  <style>
+    .cost-hero{text-align:center;padding:28px;background:var(--bg);border-radius:8px;margin-bottom:20px}
+    .cost-total{font-family:var(--font-display);font-size:clamp(2.2rem,7vw,3.2rem);font-weight:700;color:var(--accent);line-height:1}
+    .cost-label{font-size:.9rem;color:var(--ink2);margin-top:6px}
+    .cost-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+    .cost-summary-item{background:var(--bg);border-radius:8px;padding:14px;text-align:center}
+    .cost-summary-item .val{font-family:var(--font-display);font-size:1.1rem;font-weight:700}
+    .cost-summary-item .lbl{font-size:.75rem;color:var(--ink2);margin-top:2px}
+    .cost-bar-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+    .cost-bar-item:last-child{border-bottom:none}
+    .cost-bar-icon{font-size:1.3rem;flex-shrink:0;width:32px;text-align:center}
+    .cost-bar-info{flex:1;min-width:0}
+    .cost-bar-label{font-size:.88rem;font-weight:600;color:var(--ink)}
+    .cost-bar-desc{font-size:.75rem;color:var(--ink2);margin-top:2px}
+    .cost-bar-track{height:8px;background:var(--surface2);border-radius:4px;margin-top:6px;overflow:hidden}
+    .cost-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+    .cost-bar-amount{font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--accent);white-space:nowrap;flex-shrink:0}
+    .cost-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    .cost-compare-item{background:var(--bg);border-radius:8px;padding:16px;text-align:center;border:2px solid transparent}
+    .cost-compare-item.active{border-color:var(--accent);background:var(--surface)}
+    .cost-compare-tier{font-size:.75rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+    .cost-compare-val{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-top:6px}
+    .cost-compare-item.active .cost-compare-val{color:var(--accent)}
+    .disclaimer{font-size:.8rem;color:var(--ink2);background:var(--surface2);padding:14px 18px;border-radius:8px;margin-top:16px;line-height:1.5}
+    .disclaimer strong{color:var(--ink)}
+    @media(max-width:768px){.cost-summary{grid-template-columns:1fr}.cost-compare{grid-template-columns:1fr}}
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de costo mensual de mascota",
+    "description": "Estima cuánto cuesta mantener un perro o gato por mes según tamaño, país y calidad de vida.",
+    "url": "https://petsguia.com/herramientas/calculadora-costo-mascota/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "publisher": {"@type": "Organization", "name": "PetsGuía", "url": "https://petsguia.com"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta mantener un perro por mes en México?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El costo mensual de un perro en México varía entre $1,800 y $7,500 MXN dependiendo del tamaño y calidad de vida. Un perro pequeño con cuidados básicos cuesta aproximadamente $1,800/mes, mientras que un perro grande con alimentación premium puede superar los $7,500/mes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Es más barato tener un gato o un perro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En general, mantener un gato es entre un 25% y 40% más económico que un perro. Los gatos comen menos, no necesitan paseos profesionales, y su grooming suele ser más barato. Sin embargo, los costos veterinarios pueden ser similares."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuáles son los gastos más grandes de tener una mascota?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La alimentación representa entre el 35% y 45% del gasto mensual, seguida por los costos veterinarios (20-25%), higiene y grooming (12-15%), extras como snacks y paseos (10-15%), y accesorios (8-10%)."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Pets<span>Guía</span></a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/herramientas/">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="tool-hero">
+    <div class="tool-hero-content">
+      <span class="tool-badge">💰 Calculadora gratuita</span>
+      <h1>¿Cuánto cuesta mantener una <em>mascota</em> por mes?</h1>
+      <p>Estimación personalizada por especie, tamaño, país y nivel de gasto. Desglose completo.</p>
+    </div>
+  </section>
+
+  <div class="tool-container">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> › <a href="/herramientas/">Herramientas</a> › Calculadora de costo mensual
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="tool-card">
+      <h2>Configurá tu cálculo</h2>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="especie">Especie</label>
+          <select id="especie" class="form-select" onchange="onEspecieChange()">
+            <option value="">Seleccioná una especie</option>
+            <option value="perro">🐶 Perro</option>
+            <option value="gato">🐱 Gato</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tamano">Tamaño</label>
+          <select id="tamano" class="form-select" disabled>
+            <option value="">Primero seleccioná especie</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pais">País</label>
+          <select id="pais" class="form-select">
+            <option value="">Seleccioná tu país</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="calidad">Nivel de gasto</label>
+          <select id="calidad" class="form-select">
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="calcular()">
+        💰 Calcular costo mensual
+      </button>
+    </div>
+
+    <!-- RESULTADO -->
+    <div class="result-card" id="resultado">
+      <div class="cost-hero">
+        <div class="cost-total" id="res-total">--</div>
+        <div class="cost-label" id="res-label">por mes</div>
+      </div>
+
+      <div class="cost-summary">
+        <div class="cost-summary-item">
+          <div class="val" id="res-anual">--</div>
+          <div class="lbl">costo anual</div>
+        </div>
+        <div class="cost-summary-item">
+          <div class="val" id="res-diario">--</div>
+          <div class="lbl">costo diario</div>
+        </div>
+        <div class="cost-summary-item">
+          <div class="val" id="res-alim-pct">--</div>
+          <div class="lbl">en alimentación</div>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:4px;">Desglose mensual por categoría</h3>
+      <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:8px;">Cada barra muestra el peso relativo de cada gasto.</p>
+      <div id="res-desglose"></div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:24px 0 4px;">Comparación por nivel de gasto</h3>
+      <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:8px;">Así varía el costo mensual según cuánto invertís.</p>
+      <div class="cost-compare" id="res-comparacion"></div>
+
+      <div class="disclaimer">
+        <strong>⚠️ Importante:</strong> Esta calculadora ofrece estimaciones orientativas basadas en promedios del mercado en 2026. Los costos reales varían según la ciudad, la marca de alimento, el veterinario elegido y las necesidades individuales de tu mascota.
+      </div>
+
+      <div id="res-consejo" style="margin-top:16px;padding:16px;background:var(--bg);border-radius:8px;font-size:0.88rem;color:var(--ink2);line-height:1.6;"></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div style="margin-top:32px;">
+        <h2 style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;padding-bottom:16px;border-bottom:2px solid var(--border);">Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuánto cuesta mantener un perro por mes?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">El costo varía según el país, tamaño y nivel de cuidado. En México, un perro mediano con cuidados estándar cuesta entre <strong>$2,500 y $5,400 MXN/mes</strong>. En España, el equivalente ronda los <strong>110–240 €/mes</strong>. La alimentación es siempre el gasto más grande (35–45% del total), seguida por el veterinario.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Es más barato tener un gato o un perro?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Sí, en general <strong>un gato es entre 25% y 40% más económico</strong> que un perro. Los gatos comen menos, no necesitan paseos profesionales, su grooming es más barato y ocupan menos espacio. Los costos veterinarios son similares, pero la alimentación y extras hacen la diferencia.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cómo puedo reducir el costo de mantener mi mascota?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Algunas estrategias: <strong>comprar alimento en bolsas grandes</strong> (mayor rendimiento por kg), aprovechar <strong>campañas de vacunación gratuitas</strong> municipales, aprender <strong>grooming básico en casa</strong> (baño, corte de uñas), fabricar juguetes caseros, y mantener <strong>prevención veterinaria</strong> al día (una desparasitación a tiempo evita tratamientos costosos).</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuánto cuesta el primer año de un cachorro?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">El primer año es el más caro. Además del costo mensual regular, hay que sumar: <strong>vacunas iniciales</strong> (esquema completo de 3–4 dosis), <strong>esterilización/castración</strong>, <strong>microchip</strong>, y el equipamiento inicial (cama, platos, correa, transportadora). En México, estos gastos únicos suman entre $3,000 y $8,000 MXN adicionales.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Debo contratar un seguro veterinario?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Depende de tu situación. Un seguro veterinario cuesta entre <strong>$200–600 MXN/mes</strong> (o 15–40 €/mes en España) y cubre emergencias y cirugías. Si tu mascota es de una raza con predisposición a enfermedades (Bulldog, Pastor Alemán, Persa), puede ser una buena inversión. Para mascotas jóvenes y sanas, un fondo de emergencia puede ser más eficiente.</div></div>
+      </div>
+    </div>
+
+    <!-- INFO SEO -->
+    <div class="tool-info">
+      <h2>¿Cómo funciona esta calculadora de costos?</h2>
+      <p>Nuestra calculadora estima el <strong>costo mensual de mantener una mascota</strong> basándose en datos reales de mercado de cinco países hispanohablantes. El cálculo considera:</p>
+      <ul>
+        <li><strong>Especie y tamaño:</strong> Un perro grande consume hasta 3× más alimento que uno pequeño. Los gatos son generalmente más económicos.</li>
+        <li><strong>País:</strong> Los precios de alimento, servicios veterinarios y accesorios varían significativamente entre México, Argentina, Colombia, España y Chile.</li>
+        <li><strong>Nivel de gasto:</strong> Desde lo básico (alimento económico, mínimos veterinarios) hasta premium (super premium, seguro médico, accesorios de marca).</li>
+      </ul>
+      <p>El desglose incluye cinco categorías: alimentación, veterinario, higiene/grooming, accesorios y extras. Los costos veterinarios están <strong>mensualizados</strong> (dividimos el gasto anual en vacunas, desparasitación y chequeos entre 12 meses).</p>
+
+      <h2>Categorías de gasto explicadas</h2>
+      <ul>
+        <li><strong>Alimentación (35–45%):</strong> El gasto más grande. Incluye alimento seco o húmedo mensual. Las marcas premium cuestan hasta 3× más que las económicas pero suelen tener mejor calidad nutricional.</li>
+        <li><strong>Veterinario (20–25%):</strong> Vacunas anuales, desparasitación trimestral, consulta semestral. No incluye emergencias o cirugías imprevistas.</li>
+        <li><strong>Higiene (10–15%):</strong> Baños, corte de pelo, limpieza dental, productos de limpieza para el hogar.</li>
+        <li><strong>Accesorios (8–10%):</strong> Renovación de juguetes, camas, platos, correas. Mensualizado porque se reemplazan periódicamente.</li>
+        <li><strong>Extras (10–15%):</strong> Snacks, premios de entrenamiento, paseos profesionales, guardería ocasional.</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <h3>¿Sabés cuánto debe comer tu mascota?</h3>
+      <p>Usá nuestra calculadora de alimentación para obtener los gramos exactos por marca y peso.</p>
+      <a href="/herramientas/calculadora-alimentacion/">Calcular ración diaria</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">PetsGuía</span>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/herramientas/">Herramientas</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/contacto.html">Contacto</a>
+        <a href="/aviso-legal.html">Aviso Legal</a>
+      </div>
+      <span class="footer-copy">© 2026 PetsGuía. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script>
+  let datos = null;
+
+  async function init() {
+    try {
+      datos = await fetch('/data/costo-mascota.json').then(r => r.json());
+    } catch(e) {
+      console.warn('No se pudo cargar costo-mascota.json:', e);
+      return;
+    }
+
+    const paisSel = document.getElementById('pais');
+    paisSel.innerHTML = '<option value="">Seleccioná tu país</option>';
+    for (const [k, v] of Object.entries(datos.paises)) {
+      paisSel.innerHTML += '<option value="' + k + '">' + v.flag + ' ' + v.nombre + '</option>';
+    }
+
+    const calSel = document.getElementById('calidad');
+    calSel.innerHTML = '';
+    for (const [k, v] of Object.entries(datos.calidad)) {
+      calSel.innerHTML += '<option value="' + k + '"' + (k === 'comodo' ? ' selected' : '') + '>' + v.label + '</option>';
+    }
+  }
+
+  function onEspecieChange() {
+    const esp = document.getElementById('especie').value;
+    const tamSel = document.getElementById('tamano');
+    if (!esp || !datos) {
+      tamSel.innerHTML = '<option value="">Primero seleccioná especie</option>';
+      tamSel.disabled = true;
+      return;
+    }
+    tamSel.innerHTML = '<option value="">Seleccioná tamaño</option>';
+    datos.tamanos[esp].forEach(function(t) {
+      tamSel.innerHTML += '<option value="' + t.id + '">' + t.label + '</option>';
+    });
+    tamSel.disabled = false;
+  }
+
+  function fmt(amount, paisId) {
+    var p = datos.paises[paisId];
+    var locales = { mx:'es-MX', ar:'es-AR', co:'es-CO', es:'es-ES', cl:'es-CL' };
+    return p.simbolo + '\u00a0' + Math.round(amount).toLocaleString(locales[paisId]);
+  }
+
+  function calcular() {
+    var esp = document.getElementById('especie').value;
+    var tam = document.getElementById('tamano').value;
+    var pais = document.getElementById('pais').value;
+    var cal = document.getElementById('calidad').value;
+
+    if (!esp) return alert('Seleccioná una especie.');
+    if (!tam) return alert('Seleccioná el tamaño.');
+    if (!pais) return alert('Seleccioná tu país.');
+    if (!cal) return alert('Seleccioná el nivel de gasto.');
+
+    var costoBase = datos.costos[esp][tam][pais];
+    var factor = datos.calidad[cal].factor;
+    var p = datos.paises[pais];
+
+    var total = 0;
+    var desglose = [];
+    datos.categorias.forEach(function(cat) {
+      var monto = Math.round(costoBase[cat.id] * factor);
+      total += monto;
+      desglose.push({ id: cat.id, label: cat.label, icon: cat.icon, desc: cat.desc, monto: monto });
+    });
+
+    // Main result
+    document.getElementById('res-total').textContent = fmt(total, pais);
+    document.getElementById('res-label').textContent = p.moneda + ' / mes';
+
+    // Summary
+    document.getElementById('res-anual').textContent = fmt(total * 12, pais);
+    document.getElementById('res-diario').textContent = fmt(total / 30, pais);
+    var alimPct = Math.round((desglose[0].monto / total) * 100);
+    document.getElementById('res-alim-pct').textContent = alimPct + '%';
+
+    // Category bars
+    var maxMonto = Math.max.apply(null, desglose.map(function(d) { return d.monto; }));
+    var colors = ['#c8541a', '#e8a44a', '#3a7d44', '#6b5fb5', '#b87a10'];
+    var barsEl = document.getElementById('res-desglose');
+    barsEl.innerHTML = '';
+    desglose.forEach(function(d, i) {
+      var pct = (d.monto / maxMonto) * 100;
+      var catPct = Math.round((d.monto / total) * 100);
+      barsEl.innerHTML += '<div class="cost-bar-item">' +
+        '<div class="cost-bar-icon">' + d.icon + '</div>' +
+        '<div class="cost-bar-info">' +
+          '<div class="cost-bar-label">' + d.label + ' <span style="font-weight:400;color:var(--ink2);font-size:0.78rem;">(' + catPct + '%)</span></div>' +
+          '<div class="cost-bar-desc">' + d.desc + '</div>' +
+          '<div class="cost-bar-track"><div class="cost-bar-fill" style="width:0%;background:' + colors[i] + ';" data-width="' + pct + '%"></div></div>' +
+        '</div>' +
+        '<div class="cost-bar-amount">' + fmt(d.monto, pais) + '</div>' +
+      '</div>';
+    });
+
+    // Animate bars
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        barsEl.querySelectorAll('.cost-bar-fill').forEach(function(bar) {
+          bar.style.width = bar.dataset.width;
+        });
+      });
+    });
+
+    // Comparison across quality tiers
+    var compEl = document.getElementById('res-comparacion');
+    compEl.innerHTML = '';
+    for (var k in datos.calidad) {
+      var v = datos.calidad[k];
+      var compTotal = 0;
+      datos.categorias.forEach(function(cat) {
+        compTotal += Math.round(costoBase[cat.id] * v.factor);
+      });
+      var isActive = k === cal;
+      compEl.innerHTML += '<div class="cost-compare-item' + (isActive ? ' active' : '') + '">' +
+        '<div class="cost-compare-tier">' + v.label + '</div>' +
+        '<div class="cost-compare-val">' + fmt(compTotal, pais) + '</div>' +
+        '<div style="font-size:0.75rem;color:var(--ink2);margin-top:4px;">' + fmt(compTotal * 12, pais) + '/año</div>' +
+      '</div>';
+    }
+
+    // Contextual tip
+    var consejo = '';
+    var espLabel = esp === 'perro' ? 'perro' : 'gato';
+    if (cal === 'basico') {
+      consejo = 'Con un presupuesto básico podés darle a tu ' + espLabel + ' una buena calidad de vida. Priorizá siempre las vacunas y desparasitación, incluso si ahorrás en otras áreas. Comprar alimento en bolsas grandes reduce el costo por kilo significativamente.';
+    } else if (cal === 'premium') {
+      consejo = 'Con nivel premium tu ' + espLabel + ' tendrá la mejor alimentación y cuidados. Considerá un seguro veterinario para cubrir emergencias y cirugías inesperadas, que pueden superar fácilmente el costo de varios meses de mantenimiento.';
+    } else {
+      consejo = 'Un nivel cómodo de gasto ofrece un excelente balance entre calidad y presupuesto. Tip: destiná un fondo mensual extra del 10% como ahorro para emergencias veterinarias. Un gasto inesperado no debería comprometer los cuidados regulares de tu ' + espLabel + '.';
+    }
+    if (tam === 'grande' && esp === 'perro') {
+      consejo += ' Los perros grandes tienen mayor predisposición a problemas articulares — la prevención temprana con suplementos de glucosamina puede ahorrarte tratamientos costosos.';
+    }
+    document.getElementById('res-consejo').innerHTML = '💡 <strong>Consejo:</strong> ' + consejo;
+
+    var card = document.getElementById('resultado');
+    card.classList.add('visible');
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function toggleFaq(btn) {
+    var item = btn.parentElement;
+    var answer = item.querySelector('.faq-answer');
+    if (item.classList.contains('open')) {
+      item.classList.remove('open');
+      answer.style.maxHeight = '0';
+    } else {
+      document.querySelectorAll('.faq-item.open').forEach(function(i) {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  init();
+  </script>
+</body>
+</html>
