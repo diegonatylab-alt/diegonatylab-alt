@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>if(location.protocol!=='https:')location.replace('https://'+location.hostname+location.pathname+location.search);</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de alimentación para perros y gatos por peso y raza – PetsGuía</title>
+  <meta name="description" content="Calculá cuántos gramos de alimento necesita tu perro o gato por día según su peso, raza, edad y nivel de actividad. Tabla con marcas populares incluida."/>
+  <meta name="keywords" content="calculadora alimentación perro, cuánto debe comer mi perro, gramos comida gato, ración diaria perro por peso, calculadora alimento mascota"/>
+  <meta property="og:title" content="Calculadora de alimentación para perros y gatos – PetsGuía"/>
+  <meta property="og:description" content="Calculá la ración diaria de tu mascota según peso, raza, edad y actividad. Tabla con marcas populares."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://petsguia.com/herramientas/calculadora-alimentacion/"/>
+  <link rel="canonical" href="https://petsguia.com/herramientas/calculadora-alimentacion/"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap"/></noscript>
+  <link rel="stylesheet" href="/css/tools.css"/>
+  <style>
+    .brand-table { width:100%; border-collapse:collapse; margin-top:16px; }
+    .brand-table th { text-align:left; font-size:0.78rem; color:var(--ink2); text-transform:uppercase; letter-spacing:0.04em; padding:10px 12px; border-bottom:2px solid var(--border); }
+    .brand-table td { padding:10px 12px; font-size:0.88rem; border-bottom:1px solid var(--border); }
+    .brand-table tr:last-child td { border-bottom:none; }
+    .brand-table .grams { font-family:var(--font-display); font-weight:700; color:var(--accent); font-size:1rem; }
+    .brand-table .tipo-badge { display:inline-block; font-size:0.7rem; font-weight:600; padding:2px 8px; border-radius:4px; }
+    .tipo-premium { background:#e8a44a22; color:#b87a10; }
+    .tipo-economico { background:#3a7d4422; color:#3a7d44; }
+    .tipo-super { background:#c8541a22; color:#c8541a; }
+    .tipo-natural { background:#6b5fb522; color:#6b5fb5; }
+    .result-kcal-box { text-align:center; padding:24px; background:var(--bg); border-radius:8px; margin-bottom:20px; }
+    .result-kcal-number { font-family:var(--font-display); font-size:clamp(2.5rem,7vw,3.5rem); font-weight:700; color:var(--accent); line-height:1; }
+    .result-kcal-label { font-size:0.9rem; color:var(--ink2); margin-top:4px; }
+    .result-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+    .result-summary-item { background:var(--bg); border-radius:8px; padding:14px; text-align:center; }
+    .result-summary-item .val { font-family:var(--font-display); font-size:1.3rem; font-weight:700; }
+    .result-summary-item .lbl { font-size:0.75rem; color:var(--ink2); margin-top:2px; }
+    .disclaimer { font-size:0.8rem; color:var(--ink2); background:var(--surface2); padding:14px 18px; border-radius:8px; margin-top:16px; line-height:1.5; }
+    .disclaimer strong { color:var(--ink); }
+    @media(max-width:768px) { .result-summary { grid-template-columns:1fr; } }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de alimentación para perros y gatos",
+    "description": "Calcula cuántos gramos de alimento necesita tu perro o gato por día según su peso, raza, edad y nivel de actividad.",
+    "url": "https://petsguia.com/herramientas/calculadora-alimentacion/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "publisher": {"@type": "Organization", "name": "PetsGuía", "url": "https://petsguia.com"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuántas veces al día debe comer un perro adulto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un perro adulto sano debe comer 2 veces al día, idealmente por la mañana y por la noche. Los cachorros menores de 4 meses necesitan 4 comidas diarias, y entre 4 y 12 meses, 3 comidas al día."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo se calculan las calorías diarias que necesita un perro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Se usa la fórmula RER (Requerimiento Energético en Reposo): 70 × (peso en kg)^0.75. Este valor base se multiplica por factores de actividad, etapa de vida y condición corporal para obtener las calorías diarias reales."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuántos gramos de croquetas debe comer un gato por día?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un gato adulto de 4 kg con actividad moderada necesita aproximadamente 50-65 gramos de croquetas premium por día. La cantidad varía según la densidad calórica del alimento, la edad y el nivel de actividad del gato."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Pets<span>Guía</span></a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/herramientas/">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="tool-hero">
+    <div class="tool-hero-content">
+      <span class="tool-badge">🍖 Calculadora gratuita</span>
+      <h1>¿Cuánto debe comer tu <em>mascota</em> por día?</h1>
+      <p>Calculá la ración diaria exacta según peso, edad, actividad y marca de alimento.</p>
+    </div>
+  </section>
+
+  <div class="tool-container">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> › <a href="/herramientas/">Herramientas</a> › Calculadora de alimentación
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="tool-card">
+      <h2>Datos de tu mascota</h2>
+
+      <div class="form-group">
+        <label for="especie">Especie</label>
+        <select id="especie" class="form-select" onchange="onEspecieChange()">
+          <option value="">Seleccioná una especie</option>
+          <option value="perro">🐶 Perro</option>
+          <option value="gato">🐱 Gato</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="peso">Peso actual (kg)</label>
+          <input type="number" id="peso" class="form-input" min="0.5" max="100" step="0.5" placeholder="Ej: 12.5"/>
+          <small>Peso actual de tu mascota en kilogramos.</small>
+        </div>
+        <div class="form-group">
+          <label for="etapa">Etapa de vida</label>
+          <select id="etapa" class="form-select" disabled>
+            <option value="">Primero seleccioná especie</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="actividad">Nivel de actividad</label>
+          <select id="actividad" class="form-select" disabled>
+            <option value="">Primero seleccioná especie</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="condicion">Condición corporal</label>
+          <select id="condicion" class="form-select" disabled>
+            <option value="">Primero seleccioná especie</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="calcular()">
+        🍖 Calcular ración diaria
+      </button>
+    </div>
+
+    <!-- RESULTADO -->
+    <div class="result-card" id="resultado">
+      <div class="result-kcal-box">
+        <div class="result-kcal-number" id="res-kcal">--</div>
+        <div class="result-kcal-label">kilocalorías por día</div>
+      </div>
+
+      <div class="result-summary">
+        <div class="result-summary-item">
+          <div class="val" id="res-tomas">--</div>
+          <div class="lbl">tomas por día</div>
+        </div>
+        <div class="result-summary-item">
+          <div class="val" id="res-kcal-toma">--</div>
+          <div class="lbl">kcal por toma</div>
+        </div>
+        <div class="result-summary-item">
+          <div class="val" id="res-agua">--</div>
+          <div class="lbl">ml agua / día</div>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:4px;">Gramos diarios por marca de alimento</h3>
+      <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:8px;">La cantidad en gramos varía porque cada marca tiene distinta densidad calórica.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="brand-table">
+          <thead>
+            <tr>
+              <th>Marca</th>
+              <th>Tipo</th>
+              <th>kcal/kg</th>
+              <th>Gramos/día</th>
+              <th>Gramos/toma</th>
+            </tr>
+          </thead>
+          <tbody id="res-marcas"></tbody>
+        </table>
+      </div>
+
+      <div class="disclaimer">
+        <strong>⚠️ Importante:</strong> Esta calculadora ofrece una estimación orientativa basada en fórmulas veterinarias estándar (RER). Las necesidades reales pueden variar según metabolismo individual, raza, clima y estado de salud. Consultá siempre a tu veterinario para ajustar la dieta de tu mascota.
+      </div>
+
+      <div id="res-consejo" style="margin-top:16px;padding:16px;background:var(--bg);border-radius:8px;font-size:0.88rem;color:var(--ink2);line-height:1.6;"></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div style="margin-top:32px;">
+        <h2 style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;padding-bottom:16px;border-bottom:2px solid var(--border);">Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuántas veces al día debe comer un perro adulto?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Un perro adulto sano debe comer <strong>2 veces al día</strong>, idealmente por la mañana y por la noche con un intervalo de 8-12 horas. Los cachorros menores de 4 meses necesitan 4 comidas diarias, y entre 4 y 12 meses, 3 comidas al día. Dividir la ración mantiene estable el nivel de azúcar en sangre y mejora la digestión.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cómo se calculan las calorías diarias (fórmula RER)?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">La fórmula base es el <strong>RER (Requerimiento Energético en Reposo)</strong>: <code>70 × (peso en kg)<sup>0.75</sup></code>. Este valor representa las calorías mínimas que necesita el animal en reposo total. Luego se multiplica por factores de actividad (1.0 a 2.0), etapa de vida (0.8 a 3.0) y condición corporal (0.8 a 1.2) para obtener la necesidad calórica real. Esta fórmula es la estándar recomendada por la WSAVA (Asociación Veterinaria Mundial de Pequeños Animales).</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuántos gramos de croquetas debe comer un gato por día?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Depende del peso, la marca y la actividad. Como referencia, un gato adulto de 4 kg con actividad moderada necesita aproximadamente <strong>50-65 gramos de croquetas premium</strong> por día. Un gato de interior necesita menos calorías que uno con acceso al exterior. Siempre revisá la tabla de alimentación del empaque y ajustá según la condición corporal de tu gato.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Puedo mezclar alimento seco con húmedo?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Sí, es una práctica común llamada <strong>alimentación mixta</strong>. Lo importante es calcular las calorías totales sumando ambas fuentes. El alimento húmedo tiene mucha menos densidad calórica (típicamente 800-1000 kcal/kg vs 3500-4000 kcal/kg del seco) pero aporta más hidratación. Si combinás, reducí proporcionalmente la cantidad de croquetas.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuánta agua debe tomar mi mascota por día?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">La regla general es <strong>50-60 ml de agua por kg de peso corporal por día</strong>. Un perro de 20 kg necesita aproximadamente 1-1.2 litros diarios. Los gatos tienden a tomar menos agua que los perros, así que usar fuentes de agua o alimento húmedo puede ayudar a mantener una hidratación adecuada. El consumo aumenta con el calor, el ejercicio y la alimentación seca.</div></div>
+      </div>
+    </div>
+
+    <!-- INFO SEO -->
+    <div class="tool-info">
+      <h2>¿Cómo funciona esta calculadora de alimentación?</h2>
+      <p>Nuestra calculadora utiliza la <strong>fórmula RER (Resting Energy Requirement)</strong> recomendada por la WSAVA y veterinarios a nivel mundial. El cálculo considera:</p>
+      <ul>
+        <li><strong>Peso corporal:</strong> La base del cálculo. A mayor peso, más calorías necesita tu mascota.</li>
+        <li><strong>Nivel de actividad:</strong> Un perro de trabajo necesita hasta el doble de calorías que uno sedentario.</li>
+        <li><strong>Etapa de vida:</strong> Los cachorros en crecimiento necesitan hasta 3× las calorías de un adulto por kg.</li>
+        <li><strong>Condición corporal:</strong> Si tu mascota necesita ganar o perder peso, ajustamos las calorías.</li>
+      </ul>
+      <p>Luego convertimos las kilocalorías a <strong>gramos concretos por marca de alimento</strong>, porque cada croqueta tiene distinta densidad calórica. No es lo mismo 300 kcal de Royal Canin que de una dieta BARF.</p>
+
+      <h2>Consejos de alimentación por etapa</h2>
+      <ul>
+        <li><strong>Cachorros (2-12 meses):</strong> Necesitan alimento específico para cachorros, más rico en proteína y calcio. Nunca les des alimento de adulto.</li>
+        <li><strong>Adultos:</strong> Mantener un horario fijo de comidas. Evitar dejar el alimento disponible todo el día (alimentación ad libitum) ya que promueve la obesidad.</li>
+        <li><strong>Senior:</strong> Requieren menos calorías pero más proteína de alta calidad. Suplementos de glucosamina pueden ayudar a las articulaciones.</li>
+        <li><strong>Gestación/Lactancia:</strong> Las necesidades calóricas aumentan dramáticamente. Consultá a tu veterinario para un plan específico.</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <h3>¿Sabés la edad real de tu mascota?</h3>
+      <p>Descubrí cuántos años humanos tiene con nuestra calculadora de edad por raza.</p>
+      <a href="/herramientas/calculadora-edad/">Calcular edad humana</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">PetsGuía</span>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/herramientas/">Herramientas</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/contacto.html">Contacto</a>
+        <a href="/aviso-legal.html">Aviso Legal</a>
+      </div>
+      <span class="footer-copy">© 2026 PetsGuía. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script>
+  let datos = null;
+
+  async function init() {
+    try {
+      datos = await fetch('/data/alimentacion.json').then(r => r.json());
+    } catch(e) {
+      console.warn('No se pudo cargar alimentacion.json:', e);
+    }
+    const params = new URLSearchParams(location.search);
+    if (params.get('especie')) {
+      document.getElementById('especie').value = params.get('especie');
+      onEspecieChange();
+    }
+  }
+
+  function onEspecieChange() {
+    const esp = document.getElementById('especie').value;
+    if (!esp || !datos) return;
+
+    const d = datos[esp];
+
+    // Etapa
+    const etapaSel = document.getElementById('etapa');
+    etapaSel.innerHTML = '<option value="">Seleccioná etapa de vida</option>';
+    for (const [k, v] of Object.entries(d.etapa_vida)) {
+      etapaSel.innerHTML += `<option value="${k}">${v.label}</option>`;
+    }
+    etapaSel.disabled = false;
+
+    // Actividad
+    const actSel = document.getElementById('actividad');
+    actSel.innerHTML = '<option value="">Seleccioná nivel</option>';
+    for (const [k, v] of Object.entries(d.actividad)) {
+      actSel.innerHTML += `<option value="${k}">${v.label}</option>`;
+    }
+    actSel.disabled = false;
+
+    // Condición
+    const condSel = document.getElementById('condicion');
+    condSel.innerHTML = '';
+    for (const [k, v] of Object.entries(d.condicion)) {
+      condSel.innerHTML += `<option value="${k}"${k === 'normal' ? ' selected' : ''}>${v.label}</option>`;
+    }
+    condSel.disabled = false;
+  }
+
+  function calcular() {
+    const esp = document.getElementById('especie').value;
+    const peso = parseFloat(document.getElementById('peso').value);
+    const etapa = document.getElementById('etapa').value;
+    const actividad = document.getElementById('actividad').value;
+    const condicion = document.getElementById('condicion').value;
+
+    if (!esp) return alert('Seleccioná una especie.');
+    if (!peso || peso <= 0) return alert('Ingresá el peso de tu mascota.');
+    if (!etapa) return alert('Seleccioná la etapa de vida.');
+    if (!actividad) return alert('Seleccioná el nivel de actividad.');
+
+    const d = datos[esp];
+
+    // RER = 70 × peso^0.75
+    const rer = d.rer_factor * Math.pow(peso, d.rer_exponent);
+
+    // Factores
+    const fActividad  = d.actividad[actividad].factor;
+    const fEtapa      = d.etapa_vida[etapa].factor;
+    const fCondicion  = d.condicion[condicion].factor;
+
+    // Calorías diarias = RER × factor etapa × factor actividad (solo combinamos etapa+actividad para adultos)
+    // Para cachorros, la etapa ya incluye el factor de crecimiento
+    let kcalDia;
+    if (etapa.startsWith('cachorro') || etapa.startsWith('gatito')) {
+      kcalDia = rer * fEtapa * fCondicion;
+    } else if (etapa === 'gestacion' || etapa === 'lactancia') {
+      kcalDia = rer * fEtapa * fCondicion;
+    } else {
+      kcalDia = rer * fActividad * fCondicion;
+    }
+
+    kcalDia = Math.round(kcalDia);
+
+    // Tomas por día
+    const tomas = datos.tomas_por_dia[etapa] || 2;
+    const kcalPorToma = Math.round(kcalDia / tomas);
+
+    // Agua recomendada (50-60 ml/kg/día → usamos 55)
+    const aguaMl = Math.round(peso * 55);
+
+    // Mostrar resultados principales
+    document.getElementById('res-kcal').textContent = kcalDia;
+    document.getElementById('res-tomas').textContent = tomas;
+    document.getElementById('res-kcal-toma').textContent = kcalPorToma;
+    document.getElementById('res-agua').textContent = aguaMl >= 1000 ? (aguaMl / 1000).toFixed(1) + ' L' : aguaMl;
+
+    // Tabla de marcas
+    const tbody = document.getElementById('res-marcas');
+    tbody.innerHTML = '';
+    d.marcas.forEach(m => {
+      const gramosDia = Math.round((kcalDia / m.kcal_kg) * 1000);
+      const gramosToma = Math.round(gramosDia / tomas);
+      let tipoClass = 'tipo-economico';
+      if (m.tipo === 'Premium') tipoClass = 'tipo-premium';
+      else if (m.tipo === 'Super Premium') tipoClass = 'tipo-super';
+      else if (m.tipo === 'Natural') tipoClass = 'tipo-natural';
+
+      tbody.innerHTML += `<tr>
+        <td><strong>${m.nombre}</strong></td>
+        <td><span class="tipo-badge ${tipoClass}">${m.tipo}</span></td>
+        <td>${m.kcal_kg.toLocaleString()}</td>
+        <td class="grams">${gramosDia} g</td>
+        <td>${gramosToma} g</td>
+      </tr>`;
+    });
+
+    // Consejo contextual
+    let consejo = '';
+    const espLabel = esp === 'perro' ? 'perro' : 'gato';
+    if (etapa.startsWith('cachorro') || etapa.startsWith('gatito')) {
+      consejo = `Tu ${espLabel} está en pleno crecimiento. Usá siempre alimento específico para cachorros/gatitos (mayor contenido proteico y de calcio). Dividí la ración en ${tomas} comidas distribuidas a lo largo del día.`;
+    } else if (etapa === 'senior') {
+      consejo = `Tu ${espLabel} senior necesita menos calorías pero más proteína de calidad. Considerá alimentos formulados para senior y suplementos articulares si es un perro de raza grande.`;
+    } else if (condicion === 'sobrepeso') {
+      consejo = `Para que tu ${espLabel} baje de peso de forma segura, reducimos las calorías un 20%. No reduzcas más sin supervisión veterinaria. Aumentar el ejercicio gradualmente también ayuda.`;
+    } else if (condicion === 'bajo_peso') {
+      consejo = `Para que tu ${espLabel} gane peso, aumentamos las calorías un 20%. Si no gana peso en 2-3 semanas, consultá al veterinario para descartar problemas de salud.`;
+    } else {
+      consejo = `Tu ${espLabel} tiene un peso ideal. Mantené esta ración y pesalo cada 2-4 semanas para ajustar si es necesario. Evitá los snacks en exceso (no más del 10% de las calorías diarias).`;
+    }
+    document.getElementById('res-consejo').innerHTML = '💡 <strong>Consejo:</strong> ' + consejo;
+
+    const card = document.getElementById('resultado');
+    card.classList.add('visible');
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    if (item.classList.contains('open')) {
+      item.classList.remove('open');
+      answer.style.maxHeight = '0';
+    } else {
+      document.querySelectorAll('.faq-item.open').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  init();
+  </script>
+</body>
+</html>
