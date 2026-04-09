@@ -1,0 +1,140 @@
+{
+  "aviso_legal": "Esta herramienta es EXCLUSIVAMENTE informativa y estimativa. NO reemplaza la consulta, diagnóstico ni prescripción de un médico veterinario. Las dosis pueden variar según el estado de salud, edad, raza, condición hepática/renal y otros factores individuales de cada animal. NUNCA administre medicamentos a su mascota sin la autorización expresa de un veterinario matriculado.",
+  "medicamentos": [
+    {
+      "id": "meloxicam",
+      "nombre": "Meloxicam",
+      "categoria": "Antiinflamatorio (AINE)",
+      "uso": "Dolor, inflamación, artritis, posoperatorio",
+      "presentaciones": ["Comprimidos 1 mg", "Comprimidos 2 mg", "Suspensión oral 1.5 mg/ml", "Inyectable 5 mg/ml"],
+      "perro": { "dosis_min": 0.1, "dosis_max": 0.2, "unidad": "mg/kg", "frecuencia": "Cada 24 h", "via": "Oral / Inyectable SC", "duracion": "3–5 días (máximo según veterinario)", "notas": "Dosis de carga el día 1: 0.2 mg/kg. Mantenimiento: 0.1 mg/kg. Dar con alimento." },
+      "gato": { "dosis_min": 0.05, "dosis_max": 0.1, "unidad": "mg/kg", "frecuencia": "Cada 24 h", "via": "Oral / Inyectable SC", "duracion": "1–3 días (uso crónico solo bajo supervisión)", "notas": "Los gatos son MUY sensibles a los AINEs. Dosis única inicial: 0.1 mg/kg. Mantenimiento: 0.05 mg/kg. No usar más de 3 días sin control veterinario." }
+    },
+    {
+      "id": "amoxicilina",
+      "nombre": "Amoxicilina",
+      "categoria": "Antibiótico (Penicilina)",
+      "uso": "Infecciones bacterianas de piel, vías urinarias, respiratorias",
+      "presentaciones": ["Comprimidos 250 mg", "Comprimidos 500 mg", "Suspensión oral 250 mg/5 ml"],
+      "perro": { "dosis_min": 10, "dosis_max": 20, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h", "via": "Oral", "duracion": "7–14 días (completar el ciclo)", "notas": "No suspender antes de completar el tratamiento aunque haya mejoría clínica." },
+      "gato": { "dosis_min": 10, "dosis_max": 20, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h", "via": "Oral", "duracion": "7–14 días", "notas": "Puede causar vómitos. Administrar con alimento para reducir irritación gástrica." }
+    },
+    {
+      "id": "amoxicilina-clavulanico",
+      "nombre": "Amoxicilina + Ácido Clavulánico",
+      "categoria": "Antibiótico (Penicilina potenciada)",
+      "uso": "Infecciones resistentes, pioderma, mordeduras, cistitis",
+      "presentaciones": ["Comprimidos 250/62.5 mg", "Comprimidos 500/125 mg", "Suspensión oral"],
+      "perro": { "dosis_min": 12.5, "dosis_max": 25, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral", "duracion": "7–14 días", "notas": "Dosis calculada sobre el componente amoxicilina. Dar con comida." },
+      "gato": { "dosis_min": 12.5, "dosis_max": 25, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral", "duracion": "7–14 días", "notas": "Bien tolerado en gatos. Administrar con alimento." }
+    },
+    {
+      "id": "metronidazol",
+      "nombre": "Metronidazol",
+      "categoria": "Antibiótico / Antiparasitario",
+      "uso": "Diarrea bacteriana, giardiasis, infecciones anaerobias, enfermedad inflamatoria intestinal",
+      "presentaciones": ["Comprimidos 250 mg", "Comprimidos 500 mg", "Suspensión oral 125 mg/5 ml"],
+      "perro": { "dosis_min": 10, "dosis_max": 25, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral", "duracion": "5–7 días", "notas": "Puede causar neurotoxicidad a dosis altas o en tratamientos prolongados. Sabor muy amargo." },
+      "gato": { "dosis_min": 10, "dosis_max": 25, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral", "duracion": "5–7 días", "notas": "Sabor muy amargo, difícil de administrar. Usar cápsulas si es posible. Hipersalivación es normal por el sabor." }
+    },
+    {
+      "id": "cefalexina",
+      "nombre": "Cefalexina",
+      "categoria": "Antibiótico (Cefalosporina)",
+      "uso": "Pioderma, infecciones de piel, infecciones urinarias",
+      "presentaciones": ["Comprimidos 250 mg", "Comprimidos 500 mg", "Suspensión oral 250 mg/5 ml"],
+      "perro": { "dosis_min": 15, "dosis_max": 30, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral", "duracion": "14–28 días (pioderma profunda)", "notas": "Antibiótico de primera elección para pioderma canina. Puede requerir tratamiento prolongado." },
+      "gato": { "dosis_min": 15, "dosis_max": 30, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral", "duracion": "7–14 días", "notas": "Buena tolerancia. Puede causar vómitos ocasionales." }
+    },
+    {
+      "id": "prednisolona",
+      "nombre": "Prednisolona / Prednisona",
+      "categoria": "Corticoide",
+      "uso": "Alergias severas, enfermedades autoinmunes, inflamación, asma felina",
+      "presentaciones": ["Comprimidos 5 mg", "Comprimidos 20 mg", "Solución oral"],
+      "perro": { "dosis_min": 0.5, "dosis_max": 2, "unidad": "mg/kg", "frecuencia": "Cada 12–24 h", "via": "Oral", "duracion": "Variable (reducción gradual obligatoria)", "notas": "Antiinflamatorio: 0.5–1 mg/kg/día. Inmunosupresor: 2–4 mg/kg/día. NUNCA suspender abruptamente. Reducir dosis gradualmente." },
+      "gato": { "dosis_min": 0.5, "dosis_max": 2, "unidad": "mg/kg", "frecuencia": "Cada 12–24 h", "via": "Oral", "duracion": "Variable (reducción gradual obligatoria)", "notas": "Usar PREDNISOLONA (no prednisona) en gatos — los gatos no convierten bien prednisona. NUNCA suspender abruptamente." }
+    },
+    {
+      "id": "omeprazol",
+      "nombre": "Omeprazol",
+      "categoria": "Protector gástrico (IBP)",
+      "uso": "Úlceras gástricas, gastritis, reflujo, protección gástrica con AINEs",
+      "presentaciones": ["Cápsulas 10 mg", "Cápsulas 20 mg"],
+      "perro": { "dosis_min": 0.5, "dosis_max": 1, "unidad": "mg/kg", "frecuencia": "Cada 24 h (en ayunas)", "via": "Oral", "duracion": "7–28 días", "notas": "Administrar 30 minutos antes de la primera comida del día. No triturar las cápsulas." },
+      "gato": { "dosis_min": 0.5, "dosis_max": 1, "unidad": "mg/kg", "frecuencia": "Cada 24 h (en ayunas)", "via": "Oral", "duracion": "7–28 días", "notas": "Misma dosis que perros. Administrar en ayunas. No abrir ni triturar cápsulas." }
+    },
+    {
+      "id": "dipirona",
+      "nombre": "Dipirona (Metamizol)",
+      "categoria": "Analgésico / Antipirético",
+      "uso": "Dolor agudo, fiebre, cólicos",
+      "presentaciones": ["Comprimidos 500 mg", "Gotas orales 500 mg/ml", "Inyectable 500 mg/ml"],
+      "perro": { "dosis_min": 25, "dosis_max": 35, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h", "via": "Oral / IM / IV lenta", "duracion": "1–3 días", "notas": "Uso a corto plazo para dolor agudo y fiebre. No combinar con otros AINEs." },
+      "gato": { "dosis_min": 25, "dosis_max": 35, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral / IM / IV lenta", "duracion": "1–2 días máximo", "notas": "Menor frecuencia que en perros. Uso restringido y solo bajo supervisión directa del veterinario." }
+    },
+    {
+      "id": "tramadol",
+      "nombre": "Tramadol",
+      "categoria": "Analgésico opioide",
+      "uso": "Dolor moderado a severo, dolor crónico, posoperatorio",
+      "presentaciones": ["Comprimidos 50 mg", "Comprimidos 100 mg", "Gotas orales"],
+      "perro": { "dosis_min": 2, "dosis_max": 5, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h", "via": "Oral", "duracion": "Según indicación veterinaria", "notas": "Puede causar sedación y constipación. No combinar con IMAO. Reducir dosis gradualmente si se usa más de 5 días." },
+      "gato": { "dosis_min": 1, "dosis_max": 2, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral", "duracion": "Según indicación veterinaria", "notas": "Puede causar euforia, midriasis y salivación en gatos. Menor dosis que en perros." }
+    },
+    {
+      "id": "ivermectina",
+      "nombre": "Ivermectina",
+      "categoria": "Antiparasitario",
+      "uso": "Sarna, ácaros, parásitos internos (según protocolo)",
+      "presentaciones": ["Comprimidos 3 mg", "Comprimidos 6 mg", "Solución oral/inyectable"],
+      "perro": { "dosis_min": 0.006, "dosis_max": 0.012, "unidad": "mg/kg", "frecuencia": "Según protocolo (preventivo: mensual)", "via": "Oral / SC", "duracion": "Variable según patología", "notas": "⚠️ CONTRAINDICADA en razas Collie, Shetland, Pastor Australiano y cruces con gen MDR1. Puede ser letal. Pedir test genético." },
+      "gato": { "dosis_min": 0.2, "dosis_max": 0.4, "unidad": "mg/kg", "frecuencia": "Dosis única, repetir a los 14 días", "via": "SC", "duracion": "1–2 aplicaciones", "notas": "Uso casi exclusivo para sarna en gatos. Supervisión veterinaria obligatoria." }
+    },
+    {
+      "id": "fenbendazol",
+      "nombre": "Fenbendazol",
+      "categoria": "Antiparasitario interno",
+      "uso": "Gusanos redondos, giardia, parásitos intestinales",
+      "presentaciones": ["Comprimidos 250 mg", "Comprimidos 500 mg", "Pasta oral", "Suspensión oral"],
+      "perro": { "dosis_min": 50, "dosis_max": 50, "unidad": "mg/kg", "frecuencia": "Cada 24 h por 3–5 días", "via": "Oral", "duracion": "3–5 días consecutivos", "notas": "Muy seguro, amplio margen terapéutico. Para giardia: 50 mg/kg/día por 5 días." },
+      "gato": { "dosis_min": 50, "dosis_max": 50, "unidad": "mg/kg", "frecuencia": "Cada 24 h por 3–5 días", "via": "Oral", "duracion": "3–5 días consecutivos", "notas": "Misma dosis que perros. Seguro en gatas gestantes." }
+    },
+    {
+      "id": "difenhidramina",
+      "nombre": "Difenhidramina",
+      "categoria": "Antihistamínico",
+      "uso": "Alergias, picaduras, reacción urticaria, sedación leve, náuseas por viaje",
+      "presentaciones": ["Comprimidos 25 mg", "Comprimidos 50 mg", "Jarabe 12.5 mg/5 ml", "Inyectable 50 mg/ml"],
+      "perro": { "dosis_min": 2, "dosis_max": 4, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h", "via": "Oral / IM", "duracion": "Según necesidad", "notas": "Puede causar somnolencia. No usar en perros con glaucoma o retención urinaria." },
+      "gato": { "dosis_min": 1, "dosis_max": 2, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h", "via": "Oral / IM", "duracion": "Según necesidad", "notas": "Menor dosis que en perros. Puede causar excitación paradójica en algunos gatos." }
+    },
+    {
+      "id": "ranitidina",
+      "nombre": "Ranitidina",
+      "categoria": "Protector gástrico (Anti-H2)",
+      "uso": "Gastritis, vómitos, reflujo, procinético suave",
+      "presentaciones": ["Comprimidos 150 mg", "Comprimidos 300 mg", "Jarabe 75 mg/5 ml"],
+      "perro": { "dosis_min": 1, "dosis_max": 2, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h", "via": "Oral / IV lenta", "duracion": "5–14 días", "notas": "Menos potente que omeprazol pero tiene efecto procinético (estimula motilidad gástrica)." },
+      "gato": { "dosis_min": 1, "dosis_max": 2, "unidad": "mg/kg", "frecuencia": "Cada 12 h", "via": "Oral / IV lenta", "duracion": "5–14 días", "notas": "Puede usarse como procinético suave. Sabor amargo, administrar en cápsulas o con comida." }
+    },
+    {
+      "id": "sucralfato",
+      "nombre": "Sucralfato",
+      "categoria": "Protector de mucosa gástrica",
+      "uso": "Úlceras gástricas, esofagitis, gastritis erosiva",
+      "presentaciones": ["Comprimidos 1 g", "Suspensión oral 200 mg/ml"],
+      "perro": { "dosis_min": 40, "dosis_max": 40, "unidad": "mg/kg", "frecuencia": "Cada 8 h (en ayunas)", "via": "Oral", "duracion": "7–21 días", "notas": "Administrar 1–2 horas antes de la comida y de otros medicamentos porque interfiere con la absorción." },
+      "gato": { "dosis_min": 40, "dosis_max": 40, "unidad": "mg/kg", "frecuencia": "Cada 8–12 h (en ayunas)", "via": "Oral", "duracion": "7–21 días", "notas": "Dar en ayunas estrictas para que forme la barrera protectora. Separar de otros fármacos." }
+    },
+    {
+      "id": "maropitant",
+      "nombre": "Maropitant (Cerenia)",
+      "categoria": "Antiemético",
+      "uso": "Vómitos, náuseas, cinetosis (mareo por movimiento)",
+      "presentaciones": ["Comprimidos 16 mg", "Comprimidos 24 mg", "Comprimidos 60 mg", "Inyectable 10 mg/ml"],
+      "perro": { "dosis_min": 2, "dosis_max": 8, "unidad": "mg/kg", "frecuencia": "Cada 24 h", "via": "Oral / SC", "duracion": "Hasta 5 días consecutivos", "notas": "Oral: 2 mg/kg. Para cinetosis: 8 mg/kg (dosis más alta). SC: 1 mg/kg. No inyectar frío (dolor)." },
+      "gato": { "dosis_min": 1, "dosis_max": 1, "unidad": "mg/kg", "frecuencia": "Cada 24 h", "via": "SC / Oral", "duracion": "Hasta 5 días consecutivos", "notas": "Inyectable preferido en gatos con vómitos activos. Calentar el inyectable a temperatura corporal para reducir dolor." }
+    }
+  ]
+}
