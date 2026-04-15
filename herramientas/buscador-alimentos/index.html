@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>if(location.protocol!=='https:')location.replace('https://'+location.hostname+location.pathname+location.search);</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¿Mi perro o gato puede comer esto? Buscador de alimentos seguros y tóxicos – PetsGuía</title>
+  <meta name="description" content="Buscador interactivo: descubrí al instante si un alimento es seguro, peligroso o tóxico para tu perro o gato. Base de datos con +100 alimentos verificados."/>
+  <meta name="keywords" content="mi perro puede comer, alimentos tóxicos perros, comida segura gatos, alimentos prohibidos mascotas, mi gato puede comer"/>
+  <meta property="og:title" content="¿Mi mascota puede comer esto? – Buscador de alimentos | PetsGuía"/>
+  <meta property="og:description" content="Buscá cualquier alimento y descubrí al instante si es seguro o tóxico para tu perro o gato. +100 alimentos verificados."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://petsguia.com/herramientas/buscador-alimentos/"/>
+  <link rel="canonical" href="https://petsguia.com/herramientas/buscador-alimentos/"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap"/></noscript>
+  <link rel="stylesheet" href="/css/tools.css"/>
+  <style>
+    /* ── SEARCH BOX ── */
+    .search-box{position:relative;margin-bottom:8px}
+    .search-input{width:100%;padding:16px 20px 16px 52px;border:2px solid var(--border);border-radius:12px;font-family:var(--font-body);font-size:1.1rem;color:var(--ink);background:var(--surface);transition:border-color .2s,box-shadow .2s}
+    .search-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(200,84,26,.12)}
+    .search-input::placeholder{color:var(--ink2);opacity:.6}
+    .search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:1.2rem;pointer-events:none;color:var(--ink2)}
+    .search-clear{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:var(--surface2);border:none;border-radius:50%;width:28px;height:28px;font-size:1rem;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--ink2)}
+    .search-clear.visible{display:flex}
+
+    /* ── SPECIES TOGGLE ── */
+    .species-toggle{display:flex;gap:8px;margin-bottom:24px}
+    .species-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-family:var(--font-body);font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;color:var(--ink2)}
+    .species-btn.active{border-color:var(--accent);background:var(--accent);color:white}
+    .species-btn:hover:not(.active){border-color:var(--accent2);color:var(--ink)}
+
+    /* ── RESULT COUNTER ── */
+    .result-count{font-size:.85rem;color:var(--ink2);margin-bottom:16px;min-height:20px}
+
+    /* ── FOOD CARDS ── */
+    .food-list{display:flex;flex-direction:column;gap:12px}
+    .food-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;transition:border-color .2s,box-shadow .2s;cursor:pointer}
+    .food-card:hover{border-color:var(--accent2);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .food-card-header{display:flex;align-items:center;gap:12px}
+    .food-card-signal{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+    .signal-verde{background:#d4edda;color:#155724}
+    .signal-amarillo{background:#fff3cd;color:#856404}
+    .signal-rojo{background:#f8d7da;color:#721c24}
+    .food-card-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;line-height:1.3}
+    .food-card-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-left:auto;flex-shrink:0;white-space:nowrap}
+    .badge-verde{background:#d4edda;color:#155724}
+    .badge-amarillo{background:#fff3cd;color:#856404}
+    .badge-rojo{background:#f8d7da;color:#721c24}
+    .food-card-body{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:none}
+    .food-card.open .food-card-body{display:block}
+    .food-card-note{font-size:.9rem;color:var(--ink2);line-height:1.7}
+    .food-card-note strong{color:var(--ink)}
+    .food-card-chevron{margin-left:8px;transition:transform .2s;color:var(--ink2);flex-shrink:0}
+    .food-card.open .food-card-chevron{transform:rotate(180deg)}
+
+    /* ── CATEGORY FILTERS ── */
+    .cat-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+    .cat-btn{padding:6px 14px;border:1px solid var(--border);border-radius:100px;background:var(--surface);font-family:var(--font-body);font-size:.8rem;cursor:pointer;transition:all .2s;color:var(--ink2);white-space:nowrap}
+    .cat-btn.active{border-color:var(--accent);background:var(--accent);color:white}
+    .cat-btn:hover:not(.active){border-color:var(--accent2);color:var(--ink)}
+
+    /* ── LEGEND ── */
+    .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+    .legend-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--ink2)}
+    .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+    .dot-verde{background:#28a745}
+    .dot-amarillo{background:#ffc107}
+    .dot-rojo{background:#dc3545}
+
+    /* ── EMPTY STATE ── */
+    .empty-state{text-align:center;padding:48px 24px;color:var(--ink2)}
+    .empty-state .emoji{font-size:3rem;margin-bottom:12px}
+    .empty-state p{font-size:.95rem;max-width:400px;margin:0 auto}
+
+    /* ── POPULAR SEARCHES ── */
+    .popular{margin-top:12px;margin-bottom:24px}
+    .popular-label{font-size:.82rem;color:var(--ink2);margin-bottom:8px}
+    .popular-tags{display:flex;flex-wrap:wrap;gap:6px}
+    .popular-tag{padding:5px 12px;border:1px solid var(--border);border-radius:100px;font-size:.8rem;cursor:pointer;background:var(--surface);color:var(--ink);transition:all .2s}
+    .popular-tag:hover{border-color:var(--accent);color:var(--accent)}
+
+    @media(max-width:480px){
+      .species-toggle{flex-direction:column}
+      .legend{flex-direction:column;gap:8px}
+      .food-card-header{flex-wrap:wrap}
+      .food-card-badge{margin-left:0;margin-top:4px}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "¿Mi perro o gato puede comer esto? – Buscador de alimentos",
+    "description": "Buscador interactivo que indica al instante si un alimento es seguro, riesgoso o tóxico para perros y gatos.",
+    "url": "https://petsguia.com/herramientas/buscador-alimentos/",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "publisher": {"@type": "Organization", "name": "PetsGuía", "url": "https://petsguia.com"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Qué alimentos son tóxicos para los perros?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los alimentos más peligrosos para perros incluyen: chocolate (teobromina), uvas y pasas (insuficiencia renal), cebolla y ajo (anemia hemolítica), xilitol (hipoglucemia y fallo hepático), aguacate (persina), nuez de macadamia, alcohol, café y masa de pan cruda. Ante cualquier ingestión, consultá a tu veterinario de urgencia."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué alimentos son tóxicos para los gatos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los alimentos más peligrosos para gatos incluyen: cebolla, ajo y puerro (anemia hemolítica), chocolate, café, cítricos, uvas y pasas, xilitol, alcohol, comida para perros a largo plazo (falta de taurina), y lirios (no es alimento pero es causa común de intoxicación). Los gatos son más sensibles que los perros a muchas sustancias."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Mi perro puede comer pollo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, el pollo cocido sin huesos, piel ni condimentos es una excelente fuente de proteína para perros. Nunca dar huesos de pollo cocidos ya que se astillan y pueden perforar el tracto digestivo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué hago si mi mascota comió algo tóxico?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Actuá rápido: 1) Identificá qué comió y cuánto. 2) Llamá inmediatamente a tu veterinario o clínica de urgencias. 3) No induzcas el vómito salvo que el veterinario lo indique. 4) Llevá el envase o muestra del alimento a la consulta. El tiempo es crítico en intoxicaciones."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Los perros pueden comer frutas?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Muchas frutas son seguras para perros con moderación: manzana (sin semillas), banana, arándanos, sandía (sin semillas), fresas y mango (sin carozo). Sin embargo, uvas, pasas, cerezas y aguacate son tóxicos. Siempre retirar semillas, carozos y cáscaras."
+        }
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3904107966422584" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Pets<span>Guía</span></a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/herramientas/">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="tool-hero">
+    <div class="tool-hero-content">
+      <span class="tool-badge">🔍 Buscador gratuito</span>
+      <h1>¿Tu mascota puede <em>comer esto</em>?</h1>
+      <p>Buscá cualquier alimento y descubrí al instante si es seguro, riesgoso o tóxico para tu perro o gato.</p>
+    </div>
+  </section>
+
+  <div class="tool-container">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> › <a href="/herramientas/">Herramientas</a> › Buscador de alimentos
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="tool-card" id="buscador-card">
+      <h2>Buscá un alimento</h2>
+
+      <div class="species-toggle">
+        <button class="species-btn active" data-species="perro" onclick="setSpecies('perro')">🐶 Perro</button>
+        <button class="species-btn" data-species="gato" onclick="setSpecies('gato')">🐱 Gato</button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Escribí un alimento… (ej: chocolate, manzana, pollo)" autocomplete="off" autofocus/>
+        <button class="search-clear" id="clearBtn" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
+      </div>
+
+      <div class="popular" id="popularSection">
+        <div class="popular-label">Búsquedas frecuentes:</div>
+        <div class="popular-tags">
+          <span class="popular-tag" onclick="quickSearch('chocolate')">Chocolate</span>
+          <span class="popular-tag" onclick="quickSearch('pollo')">Pollo</span>
+          <span class="popular-tag" onclick="quickSearch('uvas')">Uvas</span>
+          <span class="popular-tag" onclick="quickSearch('huevo')">Huevo</span>
+          <span class="popular-tag" onclick="quickSearch('manzana')">Manzana</span>
+          <span class="popular-tag" onclick="quickSearch('cebolla')">Cebolla</span>
+          <span class="popular-tag" onclick="quickSearch('leche')">Leche</span>
+          <span class="popular-tag" onclick="quickSearch('arroz')">Arroz</span>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot dot-verde"></span> Seguro con moderación</div>
+        <div class="legend-item"><span class="legend-dot dot-amarillo"></span> Precaución / Limitar</div>
+        <div class="legend-item"><span class="legend-dot dot-rojo"></span> Tóxico / Peligroso</div>
+      </div>
+
+      <div class="cat-filters" id="catFilters"></div>
+
+      <div class="result-count" id="resultCount"></div>
+
+      <div class="food-list" id="foodList"></div>
+    </div>
+
+    <!-- EMERGENCIA -->
+    <div class="tool-card" style="margin-top:24px;border-color:#dc3545;background:#fff5f5;">
+      <h2 style="color:#dc3545;">🚨 ¿Tu mascota comió algo tóxico?</h2>
+      <div style="font-size:.92rem;color:var(--ink2);line-height:1.7">
+        <p style="margin-bottom:12px"><strong style="color:var(--ink)">Actuá rápido. El tiempo es crítico.</strong></p>
+        <ol style="padding-left:20px;margin-bottom:12px">
+          <li><strong>Identificá</strong> qué comió, cuánto y hace cuánto tiempo.</li>
+          <li><strong>Llamá</strong> a tu veterinario o clínica de urgencias más cercana <strong>inmediatamente</strong>.</li>
+          <li><strong>No induzcas</strong> el vómito salvo que el profesional lo indique explícitamente.</li>
+          <li><strong>Llevá</strong> el envase o una muestra del alimento/sustancia a la consulta.</li>
+        </ol>
+        <p style="font-size:.82rem;color:var(--ink2)">Esta herramienta es orientativa y no reemplaza el diagnóstico ni la atención de un veterinario matriculado.</p>
+      </div>
+    </div>
+
+    <!-- FAQ / SEO CONTENT -->
+    <div class="tool-info">
+      <h2>¿Qué alimentos pueden comer los perros?</h2>
+      <p>Los perros son omnívoros y pueden comer una variedad de alimentos además de su comida balanceada. Las <strong>proteínas cocidas</strong> como pollo, pavo, carne vacuna y salmón son excelentes opciones. Muchas <strong>frutas</strong> como manzana (sin semillas), banana, arándanos y sandía son seguras con moderación. <strong>Verduras</strong> como zanahoria, zapallo, judías verdes y pepino son premios saludables bajos en calorías.</p>
+      <p>Sin embargo, hay alimentos que son <strong>extremadamente tóxicos</strong>: chocolate, uvas, pasas, cebolla, ajo, xilitol (edulcorante), aguacate, nuez de macadamia, alcohol, café y huesos cocidos. Incluso pequeñas cantidades pueden causar emergencias veterinarias.</p>
+    </div>
+
+    <div class="tool-info">
+      <h2>¿Qué alimentos pueden comer los gatos?</h2>
+      <p>Los gatos son <strong>carnívoros obligados</strong>, lo que significa que necesitan proteína animal como base de su dieta. El pollo, pavo, salmón cocido y sardinas son excelentes opciones. Los gatos necesitan <strong>taurina</strong>, un aminoácido esencial que solo se encuentra en la proteína animal.</p>
+      <p>Los alimentos más peligrosos para gatos incluyen: cebolla, ajo y puerro (familia Allium), chocolate, cítricos, uvas y pasas, comida para perros a largo plazo (carece de taurina) y alcohol. Los gatos son <strong>más sensibles</strong> que los perros a muchas sustancias tóxicas debido a su menor tamaño y diferencias en el metabolismo hepático.</p>
+    </div>
+
+    <div class="tool-info">
+      <h2>Preguntas frecuentes</h2>
+
+      <h3 style="font-family:var(--font-display);font-size:1rem;margin:16px 0 8px">¿La información de esta herramienta reemplaza al veterinario?</h3>
+      <p>No. Esta herramienta es <strong>orientativa y educativa</strong>. Ante cualquier duda o si tu mascota ingirió algo potencialmente tóxico, consultá siempre a un veterinario matriculado. La gravedad depende de la cantidad ingerida, el peso del animal y su estado de salud.</p>
+
+      <h3 style="font-family:var(--font-display);font-size:1rem;margin:16px 0 8px">¿Por qué un alimento puede ser seguro para perros pero no para gatos?</h3>
+      <p>Perros y gatos metabolizan los alimentos de manera diferente. Los gatos carecen de ciertas enzimas hepáticas (como la glucuronil transferasa) lo que los hace más vulnerables a sustancias que los perros toleran mejor. Además, los gatos son carnívoros obligados y no están adaptados a procesar muchos vegetales o frutas.</p>
+
+      <h3 style="font-family:var(--font-display);font-size:1rem;margin:16px 0 8px">¿Qué significa el semáforo amarillo?</h3>
+      <p>El <strong>amarillo</strong> indica que el alimento no es tóxico per se, pero debe darse con precaución: en pequeñas cantidades, de forma ocasional, o tiene riesgos específicos (exceso de grasa, sal, azúcar o componentes irritantes). Leé siempre la nota detallada de cada alimento.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <h3>¿Querés saber cuánto debe comer tu mascota por día?</h3>
+      <p>Usá nuestra calculadora de alimentación para conocer la ración exacta según peso, raza y actividad.</p>
+      <a href="/herramientas/calculadora-alimentacion/" style="display:inline-block;margin-top:12px;padding:10px 24px;background:var(--accent2);color:var(--ink);border-radius:8px;font-weight:600;">Calcular ración diaria</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">PetsGuía</span>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/herramientas/">Herramientas</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/contacto.html">Contacto</a>
+        <a href="/aviso-legal.html">Aviso Legal</a>
+      </div>
+      <span class="footer-copy">© 2026 PetsGuía. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  'use strict';
+
+  let DATA = null;
+  let currentSpecies = 'perro';
+  let currentCategory = '';
+  let openCardId = null;
+
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('clearBtn');
+  const foodList = document.getElementById('foodList');
+  const resultCount = document.getElementById('resultCount');
+  const catFilters = document.getElementById('catFilters');
+  const popularSection = document.getElementById('popularSection');
+
+  // Normalize for accent-insensitive search
+  function normalize(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  // Load data
+  fetch('/data/alimentos-mascotas.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      DATA = d;
+      buildCategoryFilters();
+      renderList();
+    });
+
+  // Species toggle
+  window.setSpecies = function(sp) {
+    currentSpecies = sp;
+    document.querySelectorAll('.species-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.species === sp);
+    });
+    renderList();
+  };
+
+  // Category filters
+  function buildCategoryFilters() {
+    var html = '<button class="cat-btn active" data-cat="" onclick="setCat(\'\')">Todos</button>';
+    DATA.categorias.sort(function(a,b){ return a.orden - b.orden; });
+    DATA.categorias.forEach(function(c){
+      html += '<button class="cat-btn" data-cat="'+c.id+'" onclick="setCat(\''+c.id+'\')">'+c.nombre+'</button>';
+    });
+    catFilters.innerHTML = html;
+  }
+
+  window.setCat = function(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.cat-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.cat === cat);
+    });
+    renderList();
+  };
+
+  // Search
+  searchInput.addEventListener('input', function(){
+    clearBtn.classList.toggle('visible', this.value.length > 0);
+    popularSection.style.display = this.value.length > 0 ? 'none' : '';
+    renderList();
+  });
+
+  window.clearSearch = function() {
+    searchInput.value = '';
+    clearBtn.classList.remove('visible');
+    popularSection.style.display = '';
+    searchInput.focus();
+    renderList();
+  };
+
+  window.quickSearch = function(term) {
+    searchInput.value = term;
+    clearBtn.classList.add('visible');
+    popularSection.style.display = 'none';
+    searchInput.focus();
+    renderList();
+  };
+
+  // Signal helpers
+  var signalIcons = { verde: '✅', amarillo: '⚠️', rojo: '🚫' };
+  var signalLabels = { verde: 'Seguro', amarillo: 'Precaución', rojo: 'Tóxico' };
+
+  function renderList() {
+    if (!DATA) return;
+    var query = normalize(searchInput.value.trim());
+    var items = DATA.alimentos;
+
+    // Filter by category
+    if (currentCategory) {
+      items = items.filter(function(f){ return f.categoria === currentCategory; });
+    }
+
+    // Filter by search
+    if (query.length > 0) {
+      items = items.filter(function(f){
+        return normalize(f.nombre).indexOf(query) !== -1 ||
+               normalize(f.categoria).indexOf(query) !== -1;
+      });
+    }
+
+    // Sort: rojo first, then amarillo, then verde (most useful order for safety)
+    var order = { rojo: 0, amarillo: 1, verde: 2 };
+    items.sort(function(a, b) {
+      var sa = a[currentSpecies] ? order[a[currentSpecies].estado] : 3;
+      var sb = b[currentSpecies] ? order[b[currentSpecies].estado] : 3;
+      if (sa !== sb) return sa - sb;
+      return a.nombre.localeCompare(b.nombre, 'es');
+    });
+
+    // If searching, sort by relevance instead
+    if (query.length > 0) {
+      items.sort(function(a, b) {
+        var na = normalize(a.nombre);
+        var nb = normalize(b.nombre);
+        var aStarts = na.indexOf(query) === 0 ? 0 : 1;
+        var bStarts = nb.indexOf(query) === 0 ? 0 : 1;
+        if (aStarts !== bStarts) return aStarts - bStarts;
+        return na.indexOf(query) - nb.indexOf(query);
+      });
+    }
+
+    // Update count
+    if (query.length > 0 || currentCategory) {
+      resultCount.textContent = items.length + ' alimento' + (items.length !== 1 ? 's' : '') + ' encontrado' + (items.length !== 1 ? 's' : '');
+    } else {
+      resultCount.textContent = items.length + ' alimentos en la base de datos';
+    }
+
+    // Render
+    if (items.length === 0) {
+      foodList.innerHTML = '<div class="empty-state"><div class="emoji">🤔</div><p>No encontramos ese alimento. Probá con otro nombre o revisá la ortografía.</p></div>';
+      return;
+    }
+
+    var html = '';
+    items.forEach(function(food) {
+      var info = food[currentSpecies];
+      if (!info) return;
+      var estado = info.estado;
+      var isOpen = openCardId === food.id;
+
+      html += '<div class="food-card' + (isOpen ? ' open' : '') + '" data-id="' + food.id + '" onclick="toggleCard(\'' + food.id + '\')">';
+      html += '<div class="food-card-header">';
+      html += '<div class="food-card-signal signal-' + estado + '">' + signalIcons[estado] + '</div>';
+      html += '<div class="food-card-title">' + escapeHtml(food.nombre) + '</div>';
+      html += '<span class="food-card-badge badge-' + estado + '">' + signalLabels[estado] + '</span>';
+      html += '<span class="food-card-chevron">▼</span>';
+      html += '</div>';
+      html += '<div class="food-card-body">';
+      html += '<div class="food-card-note">' + escapeHtml(info.nota) + '</div>';
+      html += '</div>';
+      html += '</div>';
+    });
+
+    foodList.innerHTML = html;
+  }
+
+  window.toggleCard = function(id) {
+    openCardId = openCardId === id ? null : id;
+    var cards = foodList.querySelectorAll('.food-card');
+    cards.forEach(function(c){
+      c.classList.toggle('open', c.dataset.id === openCardId);
+    });
+  };
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+})();
+</script>
+</body>
+</html>
