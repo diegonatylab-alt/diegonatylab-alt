@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>if(location.protocol!=='https:')location.replace('https://'+location.hostname+location.pathname+location.search);</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de toxicidad por chocolate para perros y gatos – PetsGuía</title>
+  <meta name="description" content="¿Tu perro comió chocolate? Calculá la cantidad de teobromina ingerida y el nivel de riesgo según el peso y tipo de chocolate. Herramienta de emergencia con pasos a seguir."/>
+  <meta name="keywords" content="mi perro comió chocolate, calculadora chocolate perros, teobromina perro, chocolate tóxico perro, cuánto chocolate es peligroso perro, intoxicación chocolate mascota"/>
+  <meta property="og:title" content="Calculadora de toxicidad por chocolate – PetsGuía"/>
+  <meta property="og:description" content="Calculá el nivel de riesgo si tu mascota comió chocolate. Resultado instantáneo según peso, tipo y cantidad."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://petsguia.com/herramientas/calculadora-chocolate/"/>
+  <link rel="canonical" href="https://petsguia.com/herramientas/calculadora-chocolate/"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap"/></noscript>
+  <link rel="stylesheet" href="/css/tools.css"/>
+  <style>
+    .risk-banner{padding:20px 24px;border-radius:12px;margin-bottom:20px;line-height:1.6}
+    .risk-banner strong{font-size:1rem}
+    .risk-banner p{font-size:.85rem;margin:8px 0 0;opacity:.95}
+    .risk-verde{background:#dcfce7;border:2px solid #22c55e;color:#14532d}
+    .risk-amarillo{background:#fef9c3;border:2px solid #eab308;color:#713f12}
+    .risk-naranja{background:#ffedd5;border:2px solid #f97316;color:#7c2d12}
+    .risk-rojo{background:#fee2e2;border:2px solid #ef4444;color:#7f1d1d}
+    .risk-icon{font-size:1.8rem;margin-right:10px;vertical-align:middle}
+
+    .choc-hero{text-align:center;padding:28px;background:var(--bg);border-radius:8px;margin-bottom:20px}
+    .choc-dose{font-family:var(--font-display);font-size:clamp(1.8rem,5vw,2.6rem);font-weight:700;line-height:1.1}
+    .choc-dose small{font-size:.5em;font-weight:400;color:var(--ink2)}
+    .choc-label{font-size:.9rem;color:var(--ink2);margin-top:6px}
+
+    .choc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .choc-grid-item{background:var(--bg);border-radius:8px;padding:14px;text-align:center}
+    .choc-grid-item .val{font-family:var(--font-display);font-size:1.1rem;font-weight:700}
+    .choc-grid-item .lbl{font-size:.75rem;color:var(--ink2);margin-top:2px}
+
+    .symptom-list{list-style:none;padding:0;margin:12px 0 0}
+    .symptom-list li{padding:8px 0;border-bottom:1px solid var(--border);font-size:.88rem;display:flex;align-items:flex-start;gap:8px}
+    .symptom-list li:last-child{border-bottom:none}
+    .symptom-list li::before{content:"•";color:var(--accent);font-weight:700;font-size:1.1rem;line-height:1}
+
+    .action-steps{counter-reset:step;list-style:none;padding:0;margin:16px 0 0}
+    .action-steps li{counter-increment:step;padding:10px 0 10px 42px;border-bottom:1px solid var(--border);font-size:.88rem;position:relative;line-height:1.5}
+    .action-steps li:last-child{border-bottom:none}
+    .action-steps li::before{content:counter(step);position:absolute;left:0;top:10px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center}
+
+    .choc-types-table{width:100%;border-collapse:collapse;margin-top:12px}
+    .choc-types-table th{text-align:left;font-size:.78rem;color:var(--ink2);padding:10px 12px;border-bottom:2px solid var(--border);text-transform:uppercase;letter-spacing:.04em}
+    .choc-types-table td{padding:10px 12px;font-size:.88rem;border-bottom:1px solid var(--border);vertical-align:top}
+    .choc-types-table tr:last-child td{border-bottom:none}
+
+    .emergency-box{background:#b91c1c;color:#fff;padding:18px 24px;border-radius:12px;margin-top:20px;line-height:1.6}
+    .emergency-box strong{font-size:1rem}
+    .emergency-box p{font-size:.85rem;margin:8px 0 0;opacity:.95}
+
+    .ref-note{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-top:16px;font-size:.82rem;line-height:1.6;color:var(--ink2)}
+
+    @media(max-width:768px){
+      .choc-grid{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de toxicidad por chocolate para perros y gatos",
+    "description": "Calcula la cantidad de teobromina ingerida y el nivel de riesgo si tu mascota comió chocolate. Resultado instantáneo según peso, tipo y cantidad.",
+    "url": "https://petsguia.com/herramientas/calculadora-chocolate/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "publisher": {"@type": "Organization", "name": "PetsGuía", "url": "https://petsguia.com"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuánto chocolate puede matar a un perro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende del tipo de chocolate y el peso del perro. La dosis letal de teobromina es aproximadamente 100-200 mg por kg de peso corporal. Esto equivale a unos 60-70 g de chocolate amargo por cada kg de peso del perro, o unos 250-350 g de chocolate con leche por kg. Un perro de 10 kg podría tener una intoxicación grave con solo 60-70 g de chocolate amargo puro."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Los gatos pueden intoxicarse con chocolate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Los gatos son incluso más sensibles a la teobromina que los perros. Sin embargo, los casos de intoxicación por chocolate en gatos son mucho menos frecuentes porque los gatos no perciben el sabor dulce y rara vez eligen comer chocolate voluntariamente."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué hago si mi perro comió chocolate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1) Determiná qué tipo de chocolate comió y cuánto. 2) Usá esta calculadora para estimar el riesgo. 3) Llamá a tu veterinario inmediatamente si la dosis supera 20 mg/kg de teobromina. 4) No induzcas el vómito sin indicación profesional. 5) Llevá el envase del chocolate a la consulta."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Por qué el chocolate es tóxico para los perros?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El chocolate contiene teobromina y cafeína, dos metilxantinas que los perros metabolizan mucho más lentamente que los humanos. La vida media de la teobromina en perros es de 17.5 horas. Esto causa acumulación en el organismo y puede provocar vómitos, diarrea, taquicardia, temblores, convulsiones e incluso la muerte."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿El chocolate blanco es peligroso para perros?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El chocolate blanco contiene cantidades mínimas de teobromina (0.1 mg/g), por lo que el riesgo de toxicidad por teobromina es prácticamente nulo. Sin embargo, su alto contenido de grasa y azúcar puede causar pancreatitis y molestias gastrointestinales, especialmente en perros pequeños o con antecedentes de problemas digestivos."
+        }
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3904107966422584" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Pets<span>Guía</span></a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/herramientas/">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="tool-hero">
+    <div class="tool-hero-content">
+      <span class="tool-badge">🍫 Herramienta de emergencia</span>
+      <h1>Calculadora de toxicidad por <em>chocolate</em></h1>
+      <p>¿Tu mascota comió chocolate? Calculá la dosis de teobromina y el nivel de riesgo al instante.</p>
+    </div>
+  </section>
+
+  <div class="tool-container">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> › <a href="/herramientas/">Herramientas</a> › Calculadora de chocolate
+    </div>
+
+    <!-- ALERTA INICIAL -->
+    <div class="emergency-box" role="alert">
+      <span style="font-size:1.4rem;margin-right:8px;vertical-align:middle;">🚨</span><strong>Si tu mascota comió chocolate hace menos de 2 horas</strong>
+      <p>Llamá a tu veterinario o clínica de urgencias <strong>inmediatamente</strong>. No esperes a que aparezcan síntomas. El tratamiento precoz (inducción del vómito + carbón activado) es mucho más efectivo dentro de las primeras 2 horas.</p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="tool-card">
+      <h2>Datos para el cálculo</h2>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="especie">Especie</label>
+          <select id="especie" class="form-select">
+            <option value="">Seleccioná una especie</option>
+            <option value="perro">🐶 Perro</option>
+            <option value="gato">🐱 Gato</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="peso">Peso corporal (kg)</label>
+          <input type="number" id="peso" class="form-input" min="0.2" max="100" step="0.1" placeholder="Ej: 12.5"/>
+          <small>Peso actual de tu mascota.</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tipo-chocolate">Tipo de chocolate</label>
+          <select id="tipo-chocolate" class="form-select">
+            <option value="">Seleccioná el tipo</option>
+            <option value="blanco">Chocolate blanco</option>
+            <option value="leche">Chocolate con leche</option>
+            <option value="semiamargo">Chocolate semi-amargo</option>
+            <option value="amargo">Chocolate amargo / negro (70%+)</option>
+            <option value="baker">Chocolate de repostería (sin azúcar)</option>
+            <option value="cacao">Cacao en polvo puro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cantidad">Cantidad ingerida (gramos)</label>
+          <input type="number" id="cantidad" class="form-input" min="1" max="5000" step="1" placeholder="Ej: 50"/>
+          <small>Estimá la cantidad total de chocolate consumido.</small>
+        </div>
+      </div>
+
+      <div class="ref-note">
+        <strong>💡 Referencia de peso:</strong> Una barra estándar pesa ~100-150 g. Un bombón ≈ 12-15 g. Una cucharada de cacao en polvo ≈ 5 g. Una taza de chips de chocolate ≈ 170 g.
+      </div>
+
+      <button class="btn-primary" onclick="calcular()" style="margin-top:20px;">
+        🍫 Calcular nivel de riesgo
+      </button>
+    </div>
+
+    <!-- RESULTADO -->
+    <div class="result-card" id="resultado">
+
+      <!-- Banner de riesgo dinámico -->
+      <div id="res-risk-banner"></div>
+
+      <div class="choc-hero">
+        <div id="res-label-dosis" style="font-size:.85rem;color:var(--ink2);margin-bottom:4px;"></div>
+        <div class="choc-dose" id="res-dosis">--</div>
+        <div class="choc-label">teobromina por kg de peso corporal</div>
+      </div>
+
+      <div class="choc-grid">
+        <div class="choc-grid-item">
+          <div class="val" id="res-total-teo">--</div>
+          <div class="lbl">Teobromina total ingerida</div>
+        </div>
+        <div class="choc-grid-item">
+          <div class="val" id="res-nivel">--</div>
+          <div class="lbl">Nivel de riesgo</div>
+        </div>
+        <div class="choc-grid-item">
+          <div class="val" id="res-tipo-choc">--</div>
+          <div class="lbl">Tipo de chocolate</div>
+        </div>
+      </div>
+
+      <!-- Síntomas esperables -->
+      <div id="res-sintomas"></div>
+
+      <!-- Qué hacer -->
+      <div id="res-acciones"></div>
+
+      <!-- Tabla de referencia -->
+      <div style="margin-top:24px;">
+        <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:4px;">Referencia: teobromina por tipo de chocolate</h3>
+        <div style="overflow-x:auto;">
+          <table class="choc-types-table">
+            <thead><tr><th>Tipo</th><th>Teobromina (mg/g)</th><th>Riesgo relativo</th></tr></thead>
+            <tbody>
+              <tr><td>Chocolate blanco</td><td>0.1</td><td style="color:#22c55e;font-weight:600;">Mínimo</td></tr>
+              <tr><td>Chocolate con leche</td><td>2.3</td><td style="color:#eab308;font-weight:600;">Bajo – Moderado</td></tr>
+              <tr><td>Chocolate semi-amargo</td><td>5.4</td><td style="color:#f97316;font-weight:600;">Moderado – Alto</td></tr>
+              <tr><td>Chocolate amargo / negro</td><td>15</td><td style="color:#ef4444;font-weight:600;">Alto</td></tr>
+              <tr><td>Chocolate de repostería</td><td>16</td><td style="color:#ef4444;font-weight:600;">Muy alto</td></tr>
+              <tr><td>Cacao en polvo puro</td><td>28.5</td><td style="color:#dc2626;font-weight:600;">Extremo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="emergency-box" style="margin-top:24px;">
+        <span style="font-size:1.4rem;margin-right:8px;vertical-align:middle;">🩺</span><strong>Consultá siempre a tu veterinario</strong>
+        <p>Esta calculadora es <strong>orientativa y educativa</strong>. Los umbrales de toxicidad son aproximados y pueden variar según la edad, condición física, sensibilidad individual y si el animal tiene enfermedades previas. <strong>Ante cualquier ingesta de chocolate, contactá a tu veterinario.</strong></p>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div style="margin-top:32px;">
+        <h2 style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;padding-bottom:16px;border-bottom:2px solid var(--border);">Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuánto chocolate puede matar a un perro?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Depende del tipo de chocolate y el peso del perro. La dosis letal de teobromina es aproximadamente <strong>100-200 mg por kg</strong> de peso corporal. Esto equivale a unos 60-70 g de chocolate amargo por cada kg de peso, o unos 250-350 g de chocolate con leche por kg. Un perro de 10 kg podría tener una intoxicación grave con solo <strong>60-70 g de chocolate amargo puro</strong>.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Los gatos pueden intoxicarse con chocolate?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Sí. Los gatos son incluso <strong>más sensibles a la teobromina</strong> que los perros. Sin embargo, los casos de intoxicación en gatos son mucho menos frecuentes porque no perciben el sabor dulce y rara vez eligen comer chocolate voluntariamente. Si tu gato ingirió chocolate, tratalo con la misma urgencia que en un perro.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Qué hago si mi perro comió chocolate?</button>
+        <div class="faq-answer"><div class="faq-answer-inner"><strong>1)</strong> Determiná qué tipo de chocolate comió y cuánto. <strong>2)</strong> Usá esta calculadora para estimar el riesgo. <strong>3)</strong> Llamá a tu veterinario inmediatamente si la dosis supera 20 mg/kg de teobromina. <strong>4)</strong> No induzcas el vómito sin indicación profesional. <strong>5)</strong> Llevá el envase del chocolate a la consulta. <strong>El tiempo es crítico:</strong> el tratamiento es más efectivo dentro de las primeras 2 horas.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Por qué el chocolate es tóxico para los perros?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">El chocolate contiene <strong>teobromina y cafeína</strong>, dos metilxantinas que los perros metabolizan mucho más lentamente que los humanos. La vida media de la teobromina en perros es de <strong>17.5 horas</strong> (vs ~6 horas en humanos). Esto causa acumulación en el organismo y puede provocar vómitos, diarrea, taquicardia, temblores, convulsiones e incluso la muerte.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿El chocolate blanco es peligroso para perros?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">El chocolate blanco contiene cantidades mínimas de teobromina (<strong>0.1 mg/g</strong>), por lo que el riesgo de toxicidad por teobromina es prácticamente nulo. Sin embargo, su alto contenido de <strong>grasa y azúcar</strong> puede causar pancreatitis y molestias gastrointestinales, especialmente en perros pequeños o con antecedentes de problemas digestivos.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuánto tarda en hacer efecto la intoxicación?</button>
+        <div class="faq-answer"><div class="faq-answer-inner">Los síntomas suelen aparecer entre <strong>6 y 12 horas</strong> después de la ingesta, pero pueden comenzar antes (2-4 horas) si la cantidad fue grande. La teobromina se absorbe lentamente, especialmente si el estómago está lleno. Los síntomas pueden durar <strong>hasta 72 horas</strong> debido a la lenta eliminación. Por eso es fundamental actuar rápido, antes de que aparezcan los síntomas.</div></div>
+      </div>
+    </div>
+
+    <!-- INFO SEO -->
+    <div class="tool-info">
+      <h2>¿Cómo funciona esta calculadora?</h2>
+      <p>La calculadora estima la <strong>dosis de teobromina ingerida</strong> según el tipo y cantidad de chocolate, y la compara con los umbrales de toxicidad establecidos en la literatura veterinaria. El cálculo es:</p>
+      <p style="background:var(--bg);padding:16px;border-radius:8px;font-family:monospace;text-align:center;font-size:1rem;margin:16px 0;">Dosis (mg/kg) = (Cantidad chocolate × Teobromina por gramo) ÷ Peso corporal</p>
+
+      <h2>Umbrales de toxicidad por teobromina</h2>
+      <ul>
+        <li><strong>Menos de 20 mg/kg:</strong> Dosis baja. Posibles molestias digestivas leves. Monitorear en casa.</li>
+        <li><strong>20 – 40 mg/kg:</strong> Toxicidad leve. Vómitos, diarrea, inquietud. Consultar al veterinario.</li>
+        <li><strong>40 – 60 mg/kg:</strong> Toxicidad moderada. Taquicardia, temblores, hiperactividad. Acudir a urgencias.</li>
+        <li><strong>Más de 60 mg/kg:</strong> Toxicidad severa. Convulsiones, arritmia, riesgo de muerte. Emergencia inmediata.</li>
+      </ul>
+      <p>La dosis letal media (DL50) de teobromina en perros se estima entre <strong>100 y 200 mg/kg</strong>, aunque se han reportado muertes con dosis menores en animales sensibles, cachorros o con enfermedades cardíacas previas.</p>
+
+      <h2>¿Qué es la teobromina?</h2>
+      <p>La <strong>teobromina</strong> (3,7-dimetilxantina) es un alcaloide natural del cacao, químicamente similar a la cafeína. Mientras que los humanos la metabolizamos rápidamente, los perros y gatos la eliminan mucho más lento, lo que permite que se acumule hasta niveles tóxicos. Afecta al sistema nervioso central, cardiovascular, respiratorio y renal.</p>
+
+      <h2>Fuentes bibliográficas</h2>
+      <ul>
+        <li>Merck Veterinary Manual – Chocolate Toxicosis in Animals</li>
+        <li>ASPCA Animal Poison Control Center</li>
+        <li>Gwaltney-Brant, S. (2001). Chocolate intoxication. <em>Veterinary Medicine</em>, 96(2), 108-111.</li>
+        <li>Finlay, F., & Guiton, S. (2005). Chocolate poisoning. <em>BMJ</em>, 331(7517), 633.</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <h3>¿Sabés qué alimentos son seguros para tu mascota?</h3>
+      <p>Consultá nuestro buscador de alimentos con semáforo de seguridad para perros y gatos.</p>
+      <a href="/herramientas/buscador-alimentos/">Buscar alimentos</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">PetsGuía</span>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/herramientas/">Herramientas</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/contacto.html">Contacto</a>
+        <a href="/aviso-legal.html">Aviso Legal</a>
+      </div>
+      <span class="footer-copy">© 2026 PetsGuía. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script>
+  function toggleFaq(btn) {
+    var item = btn.parentElement;
+    var answer = item.querySelector('.faq-answer');
+    if (item.classList.contains('open')) {
+      item.classList.remove('open');
+      answer.style.maxHeight = '0';
+    } else {
+      document.querySelectorAll('.faq-item.open').forEach(function(i) {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  /* ── Datos de teobromina por tipo de chocolate (mg por gramo) ── */
+  var chocolates = {
+    blanco:     { nombre: 'Chocolate blanco',                teo: 0.1  },
+    leche:      { nombre: 'Chocolate con leche',             teo: 2.3  },
+    semiamargo: { nombre: 'Chocolate semi-amargo',           teo: 5.4  },
+    amargo:     { nombre: 'Chocolate amargo / negro (70%+)', teo: 15   },
+    baker:      { nombre: 'Chocolate de repostería',         teo: 16   },
+    cacao:      { nombre: 'Cacao en polvo puro',             teo: 28.5 }
+  };
+
+  /* ── Umbrales de toxicidad (mg teobromina / kg peso corporal) ── */
+  var umbrales = [
+    { min: 0,  max: 20,  nivel: 'Bajo',     clase: 'verde',    icon: '✅' },
+    { min: 20, max: 40,  nivel: 'Leve',     clase: 'amarillo', icon: '⚠️' },
+    { min: 40, max: 60,  nivel: 'Moderado', clase: 'naranja',  icon: '🟠' },
+    { min: 60, max: 9999,nivel: 'Severo',   clase: 'rojo',     icon: '🚨' }
+  ];
+
+  var sintomasPorNivel = {
+    verde: [
+      'Posibles molestias digestivas leves (gas, heces blandas)',
+      'Generalmente sin síntomas clínicos significativos',
+      'Monitorear durante 24 horas por precaución'
+    ],
+    amarillo: [
+      'Vómitos y/o diarrea',
+      'Inquietud, nerviosismo',
+      'Aumento de la sed y micción frecuente',
+      'Posible dolor abdominal'
+    ],
+    naranja: [
+      'Taquicardia (frecuencia cardíaca elevada)',
+      'Temblores musculares',
+      'Hiperactividad e irritabilidad',
+      'Jadeo excesivo',
+      'Posibles arritmias cardíacas'
+    ],
+    rojo: [
+      'Convulsiones',
+      'Arritmias cardíacas severas',
+      'Rigidez muscular',
+      'Hipertermia (temperatura corporal elevada)',
+      'Colapso cardiovascular',
+      'Riesgo de muerte sin tratamiento'
+    ]
+  };
+
+  var accionesPorNivel = {
+    verde: [
+      'Monitorear a tu mascota durante las próximas 24 horas.',
+      'Observar si aparecen vómitos, diarrea o inquietud.',
+      'Ofrecer agua fresca en abundancia.',
+      'Si aparecen síntomas, contactar al veterinario.'
+    ],
+    amarillo: [
+      'Contactar a tu veterinario para informar la ingesta.',
+      'Seguir las indicaciones del profesional (puede indicar inducir el vómito si fue reciente).',
+      'No administrar ningún medicamento sin indicación veterinaria.',
+      'Monitorear signos vitales y comportamiento durante 48 horas.'
+    ],
+    naranja: [
+      'Acudir a urgencias veterinarias INMEDIATAMENTE.',
+      'Llevar el envase del chocolate para que identifiquen el tipo exacto.',
+      'No inducir el vómito por cuenta propia.',
+      'El veterinario puede administrar carbón activado, fluidos IV y monitoreo cardíaco.',
+      'Prepararse para hospitalización de 24-72 horas.'
+    ],
+    rojo: [
+      'EMERGENCIA: Acudir a urgencias veterinarias SIN DEMORA.',
+      'Cada minuto cuenta. No esperar a que aparezcan síntomas.',
+      'Llevar el envase o resto del chocolate.',
+      'El tratamiento incluye descontaminación, fluidoterapia, control de convulsiones y monitoreo cardíaco intensivo.',
+      'Probable hospitalización de 48-72 horas o más.'
+    ]
+  };
+
+  var mensajesPorNivel = {
+    verde: {
+      titulo: 'Riesgo bajo',
+      texto: 'La cantidad de teobromina ingerida está por debajo del umbral de toxicidad clínica. Es poco probable que cause síntomas graves, pero <strong>monitoreá a tu mascota</strong> durante 24 horas. Si aparecen vómitos, diarrea o inquietud, consultá al veterinario.'
+    },
+    amarillo: {
+      titulo: 'Toxicidad leve – Contactar veterinario',
+      texto: 'La dosis de teobromina está en el rango de <strong>toxicidad leve</strong>. Pueden aparecer síntomas gastrointestinales y nerviosismo. <strong>Contactá a tu veterinario</strong> para recibir indicaciones. Si la ingesta fue hace menos de 2 horas, el veterinario puede inducir el vómito.'
+    },
+    naranja: {
+      titulo: 'Toxicidad moderada – Acudir a urgencias',
+      texto: 'La dosis ingerida puede causar <strong>síntomas cardíacos y neuromusculares</strong>. Es necesario acudir a <strong>urgencias veterinarias</strong> lo antes posible. El animal puede requerir monitoreo cardíaco, fluidoterapia y posible hospitalización.'
+    },
+    rojo: {
+      titulo: 'Toxicidad severa – EMERGENCIA',
+      texto: 'La dosis de teobromina es <strong>potencialmente letal</strong>. Acudir a <strong>urgencias veterinarias INMEDIATAMENTE</strong>. Sin tratamiento, existe riesgo de convulsiones, fallo cardíaco y muerte. El tratamiento temprano es crítico para la supervivencia.'
+    }
+  };
+
+  function calcular() {
+    var especie = document.getElementById('especie').value;
+    var peso = parseFloat(document.getElementById('peso').value);
+    var tipoChoc = document.getElementById('tipo-chocolate').value;
+    var cantidad = parseFloat(document.getElementById('cantidad').value);
+
+    /* Validaciones */
+    if (!especie) { alert('Seleccioná una especie.'); return; }
+    if (!peso || peso <= 0) { alert('Ingresá el peso de tu mascota.'); return; }
+    if (!tipoChoc) { alert('Seleccioná el tipo de chocolate.'); return; }
+    if (!cantidad || cantidad <= 0) { alert('Ingresá la cantidad de chocolate ingerida.'); return; }
+
+    var choc = chocolates[tipoChoc];
+    var totalTeo = cantidad * choc.teo;           /* mg totales de teobromina */
+    var dosisPorKg = totalTeo / peso;             /* mg/kg */
+
+    /* Determinar nivel de riesgo */
+    var nivel = umbrales[0];
+    for (var i = 0; i < umbrales.length; i++) {
+      if (dosisPorKg >= umbrales[i].min) nivel = umbrales[i];
+    }
+
+    /* Mostrar resultado */
+    var resCard = document.getElementById('resultado');
+    resCard.style.display = 'block';
+
+    /* Dosis principal */
+    document.getElementById('res-dosis').innerHTML = dosisPorKg.toFixed(1) + ' <small>mg/kg</small>';
+    document.getElementById('res-dosis').style.color =
+      nivel.clase === 'verde' ? '#22c55e' :
+      nivel.clase === 'amarillo' ? '#ca8a04' :
+      nivel.clase === 'naranja' ? '#ea580c' : '#dc2626';
+
+    document.getElementById('res-label-dosis').textContent =
+      (especie === 'perro' ? '🐶 Perro' : '🐱 Gato') + ' de ' + peso + ' kg — ' + cantidad + ' g de ' + choc.nombre.toLowerCase();
+
+    /* Grid */
+    document.getElementById('res-total-teo').textContent = totalTeo.toFixed(1) + ' mg';
+    document.getElementById('res-nivel').innerHTML = nivel.icon + ' ' + nivel.nivel;
+    document.getElementById('res-tipo-choc').textContent = choc.nombre;
+
+    /* Banner de riesgo */
+    var msg = mensajesPorNivel[nivel.clase];
+    document.getElementById('res-risk-banner').innerHTML =
+      '<div class="risk-banner risk-' + nivel.clase + '">' +
+      '<span class="risk-icon">' + nivel.icon + '</span><strong>' + msg.titulo + '</strong>' +
+      '<p>' + msg.texto + '</p>' +
+      '</div>';
+
+    /* Síntomas */
+    var sintomas = sintomasPorNivel[nivel.clase];
+    var sintomasHtml = '<h3 style="font-family:var(--font-display);font-size:1.1rem;margin-top:24px;margin-bottom:4px;">Síntomas esperables</h3>';
+    sintomasHtml += '<ul class="symptom-list">';
+    for (var s = 0; s < sintomas.length; s++) {
+      sintomasHtml += '<li>' + sintomas[s] + '</li>';
+    }
+    sintomasHtml += '</ul>';
+    document.getElementById('res-sintomas').innerHTML = sintomasHtml;
+
+    /* Acciones */
+    var acciones = accionesPorNivel[nivel.clase];
+    var accionesHtml = '<h3 style="font-family:var(--font-display);font-size:1.1rem;margin-top:24px;margin-bottom:4px;">¿Qué hacer ahora?</h3>';
+    accionesHtml += '<ol class="action-steps">';
+    for (var a = 0; a < acciones.length; a++) {
+      accionesHtml += '<li>' + acciones[a] + '</li>';
+    }
+    accionesHtml += '</ol>';
+    document.getElementById('res-acciones').innerHTML = accionesHtml;
+
+    /* Nota especial para gatos */
+    if (especie === 'gato') {
+      var notaGato = document.createElement('div');
+      notaGato.className = 'ref-note';
+      notaGato.style.marginTop = '16px';
+      notaGato.innerHTML = '<strong>🐱 Nota sobre gatos:</strong> Los gatos son más sensibles a la teobromina que los perros. Los umbrales de toxicidad pueden ser menores. Si tu gato ingirió chocolate, consultá al veterinario independientemente de la cantidad calculada.';
+      /* Agregar solo si no existe ya */
+      var existente = resCard.querySelector('.nota-gato');
+      if (existente) existente.remove();
+      notaGato.classList.add('nota-gato');
+      document.getElementById('res-acciones').after(notaGato);
+    } else {
+      var existente = resCard.querySelector('.nota-gato');
+      if (existente) existente.remove();
+    }
+
+    resCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  </script>
+
+</body>
+</html>
