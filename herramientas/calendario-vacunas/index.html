@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>if(location.protocol!=='https:')location.replace('https://'+location.hostname+location.pathname+location.search);</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendario de vacunación para perros y gatos personalizado – PetsGuía</title>
+  <meta name="description" content="Generá el calendario de vacunas personalizado de tu perro o gato según su fecha de nacimiento. Vacunas obligatorias y opcionales con fechas exactas."/>
+  <meta name="keywords" content="calendario vacunas cachorro, vacunas perro cuándo, calendario vacunación gato, plan vacunas mascota, vacunas obligatorias perro"/>
+  <meta property="og:title" content="Calendario de vacunación personalizado para perros y gatos – PetsGuía"/>
+  <meta property="og:description" content="Ingresá la fecha de nacimiento y generamos el calendario de vacunas con fechas exactas para tu mascota."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://petsguia.com/herramientas/calendario-vacunas/"/>
+  <link rel="canonical" href="https://petsguia.com/herramientas/calendario-vacunas/"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap"/></noscript>
+  <link rel="stylesheet" href="/css/tools.css"/>
+  <style>
+    .species-toggle{display:flex;gap:8px;margin-bottom:16px}
+    .species-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-family:var(--font-body);font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;color:var(--ink2)}
+    .species-btn.active{border-color:var(--accent);background:var(--accent);color:white}
+    .species-btn:hover:not(.active){border-color:var(--accent2);color:var(--ink)}
+
+    .timeline{margin:24px 0;position:relative;padding-left:32px}
+    .timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:3px;background:var(--border);border-radius:2px}
+    .tl-group{margin-bottom:28px}
+    .tl-group-title{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:12px;color:var(--ink)}
+    .tl-item{position:relative;margin-bottom:14px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .2s}
+    .tl-item:hover{border-color:var(--accent2)}
+    .tl-dot{position:absolute;left:-25px;top:20px;width:13px;height:13px;border-radius:50%;border:3px solid var(--surface)}
+    .tl-dot.obligatoria{background:var(--accent)}
+    .tl-dot.opcional{background:var(--accent2)}
+    .tl-dot.pasada{background:#22c55e}
+    .tl-dot.proxima{background:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.2)}
+    .tl-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .tl-name{font-weight:700;font-size:.92rem}
+    .tl-badge{font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
+    .tl-badge.oblig{background:#fee2e2;color:#991b1b}
+    .tl-badge.opc{background:#fef3c7;color:#92400e}
+    .tl-badge.done{background:#dcfce7;color:#166534}
+    .tl-badge.next{background:#dbeafe;color:#1e40af}
+    .tl-date{font-size:.85rem;color:var(--ink2);margin-top:4px}
+    .tl-date strong{color:var(--ink)}
+    .tl-notes{font-size:.82rem;color:var(--ink2);margin-top:8px;line-height:1.5;padding-top:8px;border-top:1px solid var(--border)}
+
+    .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+    .legend-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--ink2)}
+    .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+
+    .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+    .summary-item{background:var(--bg);border-radius:8px;padding:14px;text-align:center}
+    .summary-item .val{font-family:var(--font-display);font-size:1.2rem;font-weight:700}
+    .summary-item .lbl{font-size:.75rem;color:var(--ink2);margin-top:2px}
+
+    .disclaimer{background:var(--surface2);border-radius:8px;padding:14px 18px;font-size:.82rem;line-height:1.6;color:var(--ink2);margin-top:20px}
+
+    .print-btn{display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding:10px 20px;border:2px solid var(--border);border-radius:10px;font-family:var(--font-body);font-size:.88rem;font-weight:600;cursor:pointer;background:var(--surface);color:var(--ink);transition:all .2s}
+    .print-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    @media print{
+      header,footer,.tool-hero,.breadcrumb,.tool-card,.faq-section,.tool-info,.cta-card,.print-btn,.legend{display:none!important}
+      .tool-container{max-width:100%;padding:0}
+      .tl-item{break-inside:avoid}
+    }
+
+    @media(max-width:768px){
+      .summary-grid{grid-template-columns:1fr}
+      .species-toggle{flex-direction:column}
+      .legend{flex-direction:column;gap:8px}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calendario de vacunación para perros y gatos",
+    "description": "Generá un calendario de vacunas personalizado con fechas exactas para tu perro o gato según su fecha de nacimiento.",
+    "url": "https://petsguia.com/herramientas/calendario-vacunas/",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "publisher": {"@type": "Organization", "name": "PetsGuía", "url": "https://petsguia.com"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuáles son las vacunas obligatorias para cachorros?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Las vacunas obligatorias para cachorros de perro son: parvovirus (3 dosis), moquillo/distemper (3 dosis), hepatitis infecciosa canina y rabia. La primera dosis se aplica entre las 6-8 semanas de vida, con refuerzos cada 3-4 semanas. La rabia se aplica a las 14-16 semanas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuándo se vacuna por primera vez a un gatito?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La primera vacuna del gatito (triple felina) se aplica entre las 8-9 semanas de vida. Protege contra panleucopenia, rinotraqueítis y calicivirus. Se necesitan 2-3 dosis con refuerzo cada 4 semanas. La vacuna de rabia se puede aplicar desde las 12 semanas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué pasa si me atraso con una vacuna de mi mascota?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un atraso de unos días no suele ser un problema, pero semanas o meses de retraso pueden requerir reiniciar la serie de vacunación. Consultá con tu veterinario lo antes posible. Mientras tanto, evitá que tu mascota tenga contacto con animales no vacunados."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Las vacunas opcionales son necesarias?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende del estilo de vida de tu mascota. La leptospirosis es importante si hay roedores o agua estancada. La Bordetella (tos de las perreras) si va a guarderías o pensiones. La leucemia felina si tu gato sale al exterior. Tu veterinario te indicará cuáles son necesarias según tu zona."
+        }
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3904107966422584" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Pets<span>Guía</span></a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/herramientas/">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="tool-hero">
+    <div class="tool-hero-content">
+      <span class="tool-badge">💉 Calendario gratuito</span>
+      <h1>Calendario de vacunación para tu <em>mascota</em></h1>
+      <p>Ingresá la fecha de nacimiento y generamos un plan de vacunas personalizado con fechas exactas.</p>
+    </div>
+  </section>
+
+  <div class="tool-container">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> › <a href="/herramientas/">Herramientas</a> › Calendario de vacunación
+    </div>
+
+    <!-- FORM -->
+    <div class="tool-card">
+      <h2>Ingresá los datos de tu mascota</h2>
+
+      <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block;">Especie</label>
+      <div class="species-toggle">
+        <button class="species-btn active" onclick="setSpecies('perro',this)" id="btnPerro">🐶 Perro</button>
+        <button class="species-btn" onclick="setSpecies('gato',this)" id="btnGato">🐱 Gato</button>
+      </div>
+
+      <div class="form-group">
+        <label for="fechaNac">Fecha de nacimiento (o aproximada)</label>
+        <input type="date" id="fechaNac" class="form-select"/>
+        <small>Si no sabés la fecha exacta, ingresá una estimación. Tu veterinario puede ayudarte.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="nombreMascota">Nombre de tu mascota (opcional)</label>
+        <input type="text" id="nombreMascota" class="form-select" placeholder="Ej: Luna" maxlength="30"/>
+      </div>
+
+      <button class="btn-primary" onclick="generar()">
+        💉 Generar calendario
+      </button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="resultado" style="display:none;">
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="val" id="sumTotal">--</div>
+          <div class="lbl">Vacunas totales</div>
+        </div>
+        <div class="summary-item">
+          <div class="val" id="sumPasadas">--</div>
+          <div class="lbl">Ya aplicadas / pasadas</div>
+        </div>
+        <div class="summary-item">
+          <div class="val" id="sumProxima">--</div>
+          <div class="lbl">Próxima vacuna</div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#22c55e"></span> Ya debería estar aplicada</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.2)"></span> Próxima</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span> Obligatoria (pendiente)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--accent2)"></span> Opcional (pendiente)</div>
+      </div>
+
+      <div id="timelineContainer"></div>
+
+      <button class="print-btn" onclick="window.print()">🖨️ Imprimir calendario</button>
+
+      <div class="disclaimer">
+        <strong>⚠️ Importante:</strong> Este calendario es una guía orientativa basada en protocolos veterinarios estándar. Las fechas exactas y la necesidad de vacunas opcionales deben ser confirmadas por tu veterinario según la zona geográfica, el estado de salud y el estilo de vida de tu mascota. No reemplaza la consulta veterinaria.
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div class="tool-card" style="padding:0;border:none;background:none;margin-top:32px;">
+        <h2 style="padding:0 0 16px;border-bottom:2px solid var(--border);">Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuáles son las vacunas obligatorias para cachorros?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Las vacunas obligatorias para cachorros de perro son: parvovirus (3 dosis), moquillo/distemper (3 dosis), hepatitis infecciosa canina y rabia. La primera dosis se aplica entre las 6-8 semanas de vida, con refuerzos cada 3-4 semanas. La rabia se aplica a las 14-16 semanas.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuándo se vacuna por primera vez a un gatito?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">La primera vacuna del gatito (triple felina) se aplica entre las 8-9 semanas de vida. Protege contra panleucopenia, rinotraqueítis y calicivirus. Se necesitan 2-3 dosis con refuerzo cada 4 semanas. La vacuna de rabia se puede aplicar desde las 12 semanas.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Qué pasa si me atraso con una vacuna?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Un atraso de unos días no suele ser un problema, pero semanas o meses de retraso pueden requerir reiniciar la serie de vacunación. Consultá con tu veterinario lo antes posible. Mientras tanto, evitá que tu mascota tenga contacto con animales no vacunados.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Las vacunas opcionales son necesarias?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Depende del estilo de vida de tu mascota. La leptospirosis es importante si hay roedores o agua estancada. La Bordetella (tos de las perreras) si va a guarderías o pensiones. La leucemia felina si tu gato sale al exterior. Tu veterinario te indicará cuáles según tu zona.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO SEO -->
+    <div class="tool-info">
+      <h2>¿Cómo funciona el calendario de vacunación?</h2>
+      <p>Nuestro calendario genera un <strong>plan personalizado de vacunas con fechas exactas</strong> basado en la fecha de nacimiento de tu mascota y los protocolos estándar de vacunación veterinaria.</p>
+      <ul>
+        <li><strong>Vacunas obligatorias:</strong> las esenciales que todo perro o gato necesita para protegerse de enfermedades graves.</li>
+        <li><strong>Vacunas opcionales:</strong> recomendadas según el estilo de vida, zona geográfica y nivel de exposición.</li>
+        <li><strong>Estado visual:</strong> identificá rápidamente cuáles ya deberían estar aplicadas, cuál es la próxima y cuáles quedan pendientes.</li>
+      </ul>
+
+      <h2>Vacunas esenciales para perros</h2>
+      <p>El protocolo estándar de vacunación canina incluye:</p>
+      <ul>
+        <li><strong>Parvovirus canino:</strong> 3 dosis entre las 6-16 semanas. Enfermedad grave que afecta el sistema digestivo.</li>
+        <li><strong>Moquillo (distemper):</strong> 3 dosis junto con parvovirus. Afecta múltiples órganos y puede ser mortal.</li>
+        <li><strong>Hepatitis infecciosa:</strong> incluida en la vacuna polivalente.</li>
+        <li><strong>Rabia:</strong> obligatoria por ley. Una dosis a las 14-16 semanas, luego refuerzo anual.</li>
+      </ul>
+
+      <h2>Vacunas esenciales para gatos</h2>
+      <p>El protocolo felino estándar incluye:</p>
+      <ul>
+        <li><strong>Triple felina (PRC):</strong> panleucopenia + rinotraqueítis + calicivirus. 2-3 dosis desde las 8 semanas.</li>
+        <li><strong>Rabia:</strong> obligatoria en muchos países, especialmente para gatos que salen al exterior.</li>
+        <li><strong>Leucemia felina (FeLV):</strong> altamente recomendada para gatos outdoor.</li>
+      </ul>
+    </div>
+
+    <div class="cta-card">
+      <h3>¿Tu mascota tiene síntomas? Verificá su estado</h3>
+      <p>Usá nuestro verificador de síntomas para orientarte antes de ir al veterinario.</p>
+      <a href="/herramientas/verificador-sintomas/">Verificar síntomas</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">PetsGuía</span>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/herramientas/">Herramientas</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/contacto.html">Contacto</a>
+        <a href="/aviso-legal.html">Aviso Legal</a>
+      </div>
+      <span class="footer-copy">© 2026 PetsGuía. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script>
+  let DATA = {};
+  let especie = 'perro';
+
+  function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+
+  async function init() {
+    try {
+      const r = await fetch('/data/vacunas-mascotas.json');
+      DATA = await r.json();
+    } catch(e) {
+      console.warn('Error cargando datos de vacunas:', e);
+    }
+  }
+
+  function setSpecies(val, btn) {
+    especie = val;
+    document.querySelectorAll('.species-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function addDays(date, days) {
+    const r = new Date(date);
+    r.setDate(r.getDate() + days);
+    return r;
+  }
+
+  function formatDate(d) {
+    const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
+  }
+
+  function formatDateShort(d) {
+    return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+  }
+
+  function generar() {
+    const fechaInput = document.getElementById('fechaNac').value;
+    const nombre = document.getElementById('nombreMascota').value.trim();
+
+    if (!fechaInput) {
+      alert('Por favor ingresá la fecha de nacimiento.');
+      return;
+    }
+
+    const fechaNac = new Date(fechaInput + 'T00:00:00');
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+
+    const specData = DATA[especie];
+    if (!specData) return;
+
+    const allVaccines = [];
+
+    specData.obligatorias.forEach(v => {
+      const fechaMin = addDays(fechaNac, v.semana_min * 7);
+      const fechaMax = addDays(fechaNac, v.semana_max * 7);
+      allVaccines.push({...v, tipo: 'obligatoria', fechaMin, fechaMax});
+    });
+
+    specData.opcionales.forEach(v => {
+      const fechaMin = addDays(fechaNac, v.semana_min * 7);
+      const fechaMax = addDays(fechaNac, v.semana_max * 7);
+      allVaccines.push({...v, tipo: 'opcional', fechaMin, fechaMax});
+    });
+
+    // Sort by fechaMin
+    allVaccines.sort((a,b) => a.fechaMin - b.fechaMin);
+
+    // Classify
+    let proxima = null;
+    let pasadas = 0;
+    allVaccines.forEach(v => {
+      if (v.fechaMax < hoy) {
+        v.estado = 'pasada';
+        pasadas++;
+      } else if (v.fechaMin <= hoy && v.fechaMax >= hoy) {
+        v.estado = 'proxima';
+        if (!proxima) proxima = v;
+      } else {
+        v.estado = 'pendiente';
+        if (!proxima) proxima = v;
+      }
+    });
+
+    // If no proxima found from "current window", use next pending
+    if (!proxima) {
+      proxima = allVaccines.find(v => v.estado === 'pendiente');
+    }
+
+    // If still none, all are past
+    if (proxima) {
+      proxima.estado = 'proxima';
+    }
+
+    // Summary
+    const mascotaLabel = nombre ? escapeHtml(nombre) : (especie === 'perro' ? 'tu perro' : 'tu gato');
+    document.getElementById('sumTotal').textContent = allVaccines.length;
+    document.getElementById('sumPasadas').textContent = pasadas;
+    document.getElementById('sumProxima').textContent = proxima ? proxima.nombre : 'Ninguna pendiente';
+
+    // Group by approximate age period
+    const groups = {};
+    allVaccines.forEach(v => {
+      const semanas = Math.round((v.fechaMin - fechaNac) / (7*24*60*60*1000));
+      let groupLabel;
+      if (semanas <= 8) groupLabel = '6-8 semanas';
+      else if (semanas <= 12) groupLabel = '10-12 semanas';
+      else if (semanas <= 16) groupLabel = '14-16 semanas';
+      else if (semanas <= 20) groupLabel = '16-20 semanas';
+      else groupLabel = 'Refuerzo anual (~12-16 meses)';
+
+      if (!groups[groupLabel]) groups[groupLabel] = [];
+      groups[groupLabel].push(v);
+    });
+
+    // Render timeline
+    let html = '<h3 style="margin-bottom:16px;">Calendario de vacunas de ' + mascotaLabel + '</h3>';
+
+    for (const [groupName, vaccines] of Object.entries(groups)) {
+      html += '<div class="tl-group">';
+      html += '<div class="tl-group-title">📅 ' + escapeHtml(groupName) + '</div>';
+
+      vaccines.forEach(v => {
+        const dotClass = v.estado === 'pasada' ? 'pasada' :
+                         v.estado === 'proxima' ? 'proxima' :
+                         v.tipo;
+
+        const badgeClass = v.estado === 'pasada' ? 'done' :
+                          v.estado === 'proxima' ? 'next' :
+                          v.tipo === 'obligatoria' ? 'oblig' : 'opc';
+
+        const badgeText = v.estado === 'pasada' ? '✓ Aplicar / aplicada' :
+                         v.estado === 'proxima' ? '→ Próxima' :
+                         v.tipo === 'obligatoria' ? 'Obligatoria' : 'Opcional';
+
+        html += '<div class="tl-item">';
+        html += '<div class="tl-dot ' + dotClass + '"></div>';
+        html += '<div class="tl-header">';
+        html += '<span class="tl-name">' + escapeHtml(v.nombre) + '</span>';
+        html += '<span class="tl-badge ' + badgeClass + '">' + badgeText + '</span>';
+        html += '</div>';
+        html += '<div class="tl-date"><strong>' + formatDate(v.fechaMin) + '</strong> – ' + formatDate(v.fechaMax) + '</div>';
+        html += '<div class="tl-notes">' + escapeHtml(v.notas) + '</div>';
+        html += '</div>';
+      });
+
+      html += '</div>';
+    }
+
+    document.getElementById('timelineContainer').innerHTML = html;
+    document.getElementById('resultado').style.display = 'block';
+    document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+
+  init();
+  </script>
+</body>
+</html>
