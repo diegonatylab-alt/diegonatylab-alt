@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>if(location.protocol!=='https:')location.replace('https://'+location.hostname+location.pathname+location.search);</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de nombres para perros y gatos – Ideas originales | PetsGuía</title>
+  <meta name="description" content="Generador interactivo de nombres para perros y gatos. Filtrá por especie, sexo y categoría (divertidos, elegantes, mitología, comida). +100 ideas con significado."/>
+  <meta name="keywords" content="nombres para perros, nombres para gatos, nombres de mascotas, nombres originales perros, generador nombres mascota, nombres graciosos perro"/>
+  <meta property="og:title" content="Generador de nombres para perros y gatos – PetsGuía"/>
+  <meta property="og:description" content="Encontrá el nombre perfecto para tu mascota. +100 ideas con significado, filtradas por especie, sexo y estilo."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://petsguia.com/herramientas/generador-nombres/"/>
+  <link rel="canonical" href="https://petsguia.com/herramientas/generador-nombres/"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap"/></noscript>
+  <link rel="stylesheet" href="/css/tools.css"/>
+  <style>
+    .species-toggle{display:flex;gap:8px;margin-bottom:16px}
+    .species-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-family:var(--font-body);font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;color:var(--ink2)}
+    .species-btn.active{border-color:var(--accent);background:var(--accent);color:white}
+    .species-btn:hover:not(.active){border-color:var(--accent2);color:var(--ink)}
+
+    .sex-toggle{display:flex;gap:8px;margin-bottom:16px}
+    .sex-btn{flex:1;padding:10px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;color:var(--ink2)}
+    .sex-btn.active{border-color:var(--accent);background:var(--accent);color:white}
+    .sex-btn:hover:not(.active){border-color:var(--accent2);color:var(--ink)}
+
+    .cat-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+    .cat-btn{padding:6px 14px;border:1px solid var(--border);border-radius:100px;background:var(--surface);font-family:var(--font-body);font-size:.8rem;cursor:pointer;transition:all .2s;color:var(--ink2);white-space:nowrap}
+    .cat-btn.active{border-color:var(--accent);background:var(--accent);color:white}
+    .cat-btn:hover:not(.active){border-color:var(--accent2);color:var(--ink)}
+
+    .result-count{font-size:.85rem;color:var(--ink2);margin-bottom:16px;min-height:20px}
+
+    .name-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+    .name-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:border-color .2s,box-shadow .2s;cursor:pointer}
+    .name-card:hover{border-color:var(--accent2);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .name-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .name-card-name{font-family:var(--font-display);font-size:1.2rem;font-weight:700}
+    .name-card-sex{font-size:1.1rem}
+    .name-card-origin{font-size:.82rem;color:var(--ink2);margin-top:6px;line-height:1.5}
+    .name-card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+    .name-tag{font-size:.7rem;padding:2px 8px;border-radius:100px;background:var(--surface2);color:var(--ink2)}
+
+    .random-section{text-align:center;margin:32px 0}
+    .btn-random{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s}
+    .btn-random:hover{background:#b04a17}
+    .random-result{margin-top:20px;display:none}
+    .random-name{font-family:var(--font-display);font-size:clamp(2rem,6vw,3rem);font-weight:700;color:var(--accent)}
+    .random-origin{font-size:.95rem;color:var(--ink2);margin-top:8px}
+    .random-again{display:inline-block;margin-top:12px;font-size:.85rem;color:var(--accent);cursor:pointer;text-decoration:underline}
+
+    .empty-state{text-align:center;padding:48px 24px;color:var(--ink2)}
+    .empty-state .emoji{font-size:3rem;margin-bottom:12px}
+    .empty-state p{font-size:.95rem;max-width:400px;margin:0 auto}
+
+    .share-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:.78rem;cursor:pointer;background:var(--surface);color:var(--ink2);transition:all .2s}
+    .share-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    @media(max-width:480px){
+      .species-toggle,.sex-toggle{flex-direction:column}
+      .name-grid{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Generador de nombres para perros y gatos",
+    "description": "Generador interactivo de nombres para mascotas con filtros por especie, sexo y categoría. Más de 100 ideas con significado y origen.",
+    "url": "https://petsguia.com/herramientas/generador-nombres/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "publisher": {"@type": "Organization", "name": "PetsGuía", "url": "https://petsguia.com"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cómo elegir el mejor nombre para mi perro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Elegí nombres cortos (1-2 sílabas) que empiecen con consonantes fuertes como K, T, D o R. Los perros distinguen mejor estos sonidos. Evitá nombres que suenen similar a comandos como 'no', 'sit' o 'ven'. Esperá unos días para conocer la personalidad de tu mascota antes de decidir."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Se puede cambiar el nombre a un perro o gato adoptado?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Los perros y gatos pueden aprender un nombre nuevo en 1-2 semanas. Usá el nuevo nombre con tono positivo, asocialo con premios y comida. Poco a poco dejá de usar el nombre anterior. Los cachorros se adaptan más rápido, pero incluso adultos responden bien al cambio."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué nombres son los más populares para perros en español?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los nombres más populares para perros en español son Luna, Max, Coco, Rocky, Bella, Toby, Lola, Simba, Milo y Canela. Los nombres inspirados en comida (Churro, Galleta, Mochi) y mitología (Zeus, Thor, Loki) también están ganando popularidad."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Los gatos responden a su nombre?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Un estudio de la Universidad de Tokio (2019) demostró que los gatos distinguen su nombre de otras palabras. Aunque no siempre obedecen como los perros, reconocen el sonido. Los nombres con vocales abiertas (a, o) y sonidos sibilantes (s, sh) suelen captar mejor su atención."
+        }
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3904107966422584" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Pets<span>Guía</span></a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/herramientas/">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="tool-hero">
+    <div class="tool-hero-content">
+      <span class="tool-badge">✨ Generador gratuito</span>
+      <h1>Generador de nombres para tu <em>mascota</em></h1>
+      <p>+100 ideas originales con significado. Filtrá por especie, sexo y estilo, o dejá que el azar decida.</p>
+    </div>
+  </section>
+
+  <div class="tool-container">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> › <a href="/herramientas/">Herramientas</a> › Generador de nombres
+    </div>
+
+    <!-- RANDOM SECTION -->
+    <div class="tool-card random-section">
+      <h2>🎲 ¿Sin ideas? Dejá que el azar decida</h2>
+      <p style="color:var(--ink2);font-size:.9rem;margin-bottom:20px;">Hacé click y te sugerimos un nombre al instante.</p>
+      <button class="btn-random" onclick="nombreAleatorio()">🎲 Nombre aleatorio</button>
+      <div class="random-result" id="randomResult">
+        <div class="random-name" id="randomName"></div>
+        <div class="random-origin" id="randomOrigin"></div>
+        <span class="random-again" onclick="nombreAleatorio()">🔄 Otro nombre</span>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="tool-card">
+      <h2>Explorá nombres por filtro</h2>
+
+      <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block;">Especie</label>
+      <div class="species-toggle">
+        <button class="species-btn active" onclick="setSpecies('todos',this)">🐾 Todos</button>
+        <button class="species-btn" onclick="setSpecies('perro',this)">🐶 Perro</button>
+        <button class="species-btn" onclick="setSpecies('gato',this)">🐱 Gato</button>
+      </div>
+
+      <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block;">Sexo</label>
+      <div class="sex-toggle">
+        <button class="sex-btn active" onclick="setSex('todos',this)">Todos</button>
+        <button class="sex-btn" onclick="setSex('macho',this)">♂ Macho</button>
+        <button class="sex-btn" onclick="setSex('hembra',this)">♀ Hembra</button>
+        <button class="sex-btn" onclick="setSex('unisex',this)">⚥ Unisex</button>
+      </div>
+
+      <label style="font-size:.85rem;font-weight:600;margin-bottom:6px;display:block;">Estilo</label>
+      <div class="cat-filters" id="catFilters"></div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="result-count" id="resultCount"></div>
+    <div class="name-grid" id="nameGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="emoji">🤔</div>
+      <p>No encontramos nombres con esos filtros. Probá cambiar la especie, sexo o categoría.</p>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div class="tool-card" style="padding:0;border:none;background:none;margin-top:32px;">
+        <h2 style="padding:0 0 16px;border-bottom:2px solid var(--border);">Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cómo elegir el mejor nombre para mi perro?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Elegí nombres cortos (1-2 sílabas) que empiecen con consonantes fuertes como K, T, D o R. Los perros distinguen mejor estos sonidos. Evitá nombres que suenen similar a comandos como "no", "sit" o "ven". Esperá unos días para conocer la personalidad de tu mascota antes de decidir.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Se puede cambiar el nombre a un perro o gato adoptado?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sí. Los perros y gatos pueden aprender un nombre nuevo en 1-2 semanas. Usá el nuevo nombre con tono positivo, asocialo con premios y comida. Poco a poco dejá de usar el nombre anterior. Los cachorros se adaptan más rápido, pero incluso adultos responden bien al cambio.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Los gatos responden a su nombre?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sí. Un estudio de la Universidad de Tokio (2019) demostró que los gatos distinguen su nombre de otras palabras. Aunque no siempre obedecen como los perros, reconocen el sonido. Los nombres con vocales abiertas (a, o) y sonidos sibilantes (s, sh) suelen captar mejor su atención.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Qué nombres son los más populares para perros en español?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Los nombres más populares para perros en español son Luna, Max, Coco, Rocky, Bella, Toby, Lola, Simba, Milo y Canela. Los nombres inspirados en comida (Churro, Galleta, Mochi) y mitología (Zeus, Thor, Loki) también están ganando popularidad.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO SEO -->
+    <div class="tool-info">
+      <h2>¿Cómo funciona el generador de nombres para mascotas?</h2>
+      <p>Nuestro generador contiene <strong>más de 100 nombres para perros y gatos</strong>, cada uno con su significado y origen. Podés filtrar por:</p>
+      <ul>
+        <li><strong>Especie:</strong> nombres que funcionan mejor para perros, para gatos, o para ambos.</li>
+        <li><strong>Sexo:</strong> macho, hembra o unisex.</li>
+        <li><strong>Categoría:</strong> populares, divertidos, elegantes, mitología, comida, naturaleza, cine, tiernos, fuertes o exóticos.</li>
+      </ul>
+      <p>También podés usar el <strong>botón de nombre aleatorio</strong> para que el generador elija por vos. Cada nombre incluye su <strong>origen etimológico</strong> y categorías para que entiendas el significado detrás de cada opción.</p>
+
+      <h2>Consejos para elegir el nombre perfecto</h2>
+      <ul>
+        <li><strong>Mantené la brevedad:</strong> 1-2 sílabas son ideales. Los perros responden mejor a nombres cortos.</li>
+        <li><strong>Evitá confusiones:</strong> no uses nombres que suenen como comandos (ejemplo: "Kit" suena como "sit").</li>
+        <li><strong>Probá el nombre en voz alta:</strong> asegurate de que sea cómodo de pronunciar y gritar en el parque.</li>
+        <li><strong>Esperá a conocerla:</strong> a veces la personalidad de tu mascota inspira el nombre perfecto.</li>
+        <li><strong>Toda la familia participa:</strong> que todos se sientan cómodos con el nombre elegido.</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <h3>¿Ya tenés el nombre? Ahora calculá su alimentación</h3>
+      <p>Usá nuestras herramientas de alimentación y cuidado para tu nueva mascota.</p>
+      <a href="/herramientas/">Ver todas las herramientas</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">PetsGuía</span>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/herramientas/">Herramientas</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/contacto.html">Contacto</a>
+        <a href="/aviso-legal.html">Aviso Legal</a>
+      </div>
+      <span class="footer-copy">© 2026 PetsGuía. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script>
+  let DATA = { categorias: [], nombres: [] };
+  let filtroEspecie = 'todos';
+  let filtroSexo = 'todos';
+  let filtrosCat = new Set();
+
+  function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+
+  async function init() {
+    try {
+      const r = await fetch('/data/nombres-mascotas.json');
+      DATA = await r.json();
+    } catch(e) {
+      console.warn('Error cargando datos:', e);
+      return;
+    }
+    renderCatFilters();
+    renderNames();
+  }
+
+  function renderCatFilters() {
+    const c = document.getElementById('catFilters');
+    c.innerHTML = '<button class="cat-btn active" onclick="toggleCat(\'todos\',this)">Todos</button>' +
+      DATA.categorias.map(cat =>
+        '<button class="cat-btn" onclick="toggleCat(\''+cat.id+'\',this)">'+cat.emoji+' '+escapeHtml(cat.nombre)+'</button>'
+      ).join('');
+  }
+
+  function setSpecies(val, btn) {
+    filtroEspecie = val;
+    document.querySelectorAll('.species-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderNames();
+  }
+
+  function setSex(val, btn) {
+    filtroSexo = val;
+    document.querySelectorAll('.sex-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderNames();
+  }
+
+  function toggleCat(id, btn) {
+    if (id === 'todos') {
+      filtrosCat.clear();
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else {
+      document.querySelector('.cat-btn').classList.remove('active'); // "Todos" button
+      if (filtrosCat.has(id)) {
+        filtrosCat.delete(id);
+        btn.classList.remove('active');
+      } else {
+        filtrosCat.add(id);
+        btn.classList.add('active');
+      }
+      if (filtrosCat.size === 0) {
+        document.querySelector('.cat-btn').classList.add('active');
+      }
+    }
+    renderNames();
+  }
+
+  function getFiltered() {
+    return DATA.nombres.filter(n => {
+      if (filtroEspecie !== 'todos' && !n.especie.includes(filtroEspecie)) return false;
+      if (filtroSexo !== 'todos' && n.sexo !== filtroSexo && n.sexo !== 'unisex') return false;
+      if (filtrosCat.size > 0 && !n.categorias.some(c => filtrosCat.has(c))) return false;
+      return true;
+    });
+  }
+
+  function renderNames() {
+    const filtered = getFiltered();
+    const grid = document.getElementById('nameGrid');
+    const empty = document.getElementById('emptyState');
+    const count = document.getElementById('resultCount');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      count.textContent = '';
+      return;
+    }
+
+    empty.style.display = 'none';
+    count.textContent = filtered.length + ' nombre' + (filtered.length !== 1 ? 's' : '') + ' encontrado' + (filtered.length !== 1 ? 's' : '');
+
+    const catMap = {};
+    DATA.categorias.forEach(c => { catMap[c.id] = c; });
+
+    const sexIcon = { macho: '♂', hembra: '♀', unisex: '⚥' };
+
+    grid.innerHTML = filtered.map(n =>
+      '<div class="name-card">' +
+        '<div class="name-card-top">' +
+          '<span class="name-card-name">' + escapeHtml(n.nombre) + '</span>' +
+          '<span class="name-card-sex">' + (sexIcon[n.sexo] || '') + '</span>' +
+        '</div>' +
+        '<div class="name-card-origin">' + escapeHtml(n.origen) + '</div>' +
+        '<div class="name-card-tags">' +
+          n.categorias.map(c => {
+            const cat = catMap[c];
+            return cat ? '<span class="name-tag">' + cat.emoji + ' ' + escapeHtml(cat.nombre) + '</span>' : '';
+          }).join('') +
+          n.especie.map(e => '<span class="name-tag">' + (e === 'perro' ? '🐶' : '🐱') + '</span>').join('') +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  function nombreAleatorio() {
+    const pool = getFiltered();
+    if (pool.length === 0) return;
+    const n = pool[Math.floor(Math.random() * pool.length)];
+    document.getElementById('randomName').textContent = n.nombre;
+    document.getElementById('randomOrigin').textContent = n.origen;
+    document.getElementById('randomResult').style.display = 'block';
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+
+  init();
+  </script>
+</body>
+</html>

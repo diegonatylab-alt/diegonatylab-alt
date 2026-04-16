@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>if(location.protocol!=='https:')location.replace('https://'+location.hostname+location.pathname+location.search);</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Predictor de peso adulto de cachorro por raza – ¿Cuánto va a pesar? | PetsGuía</title>
+  <meta name="description" content="Calculá cuánto va a pesar tu cachorro cuando sea adulto. Ingresá la raza, edad actual y peso, y obtené una estimación basada en curvas de crecimiento por tamaño."/>
+  <meta name="keywords" content="cuánto va a pesar mi cachorro, peso adulto cachorro, predictor peso perro, calculadora peso cachorro, crecimiento cachorro por raza"/>
+  <meta property="og:title" content="Predictor de peso adulto de cachorro – PetsGuía"/>
+  <meta property="og:description" content="Estimá el peso adulto de tu cachorro según su raza, edad y peso actual. Fórmula por curva de crecimiento."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://petsguia.com/herramientas/predictor-peso/"/>
+  <link rel="canonical" href="https://petsguia.com/herramientas/predictor-peso/"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600&display=swap"/></noscript>
+  <link rel="stylesheet" href="/css/tools.css"/>
+  <style>
+    .pred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .pred-grid-item{background:var(--bg);border-radius:8px;padding:14px;text-align:center}
+    .pred-grid-item .val{font-family:var(--font-display);font-size:1.1rem;font-weight:700}
+    .pred-grid-item .lbl{font-size:.75rem;color:var(--ink2);margin-top:2px}
+
+    .progress-visual{margin:24px 0}
+    .progress-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--ink2);margin-bottom:6px}
+    .progress-track{height:24px;background:var(--surface2);border-radius:12px;overflow:hidden;position:relative}
+    .progress-fill{height:100%;border-radius:12px;transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:.75rem;font-weight:700;color:#fff}
+    .progress-fill.low{background:linear-gradient(90deg,#f59e0b,#f97316)}
+    .progress-fill.mid{background:linear-gradient(90deg,#f97316,#22c55e)}
+    .progress-fill.high{background:linear-gradient(90deg,#22c55e,#16a34a)}
+
+    .size-info{background:var(--bg);border-radius:8px;padding:16px;margin-top:16px;font-size:.88rem;line-height:1.6;color:var(--ink2)}
+    .size-info strong{color:var(--ink)}
+
+    .method-note{background:var(--surface2);border-radius:8px;padding:14px 18px;margin-top:16px;font-size:.82rem;line-height:1.6;color:var(--ink2)}
+
+    @media(max-width:768px){
+      .pred-grid{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Predictor de peso adulto de cachorro",
+    "description": "Estimá cuánto va a pesar tu cachorro cuando sea adulto según su raza, edad actual y peso. Basado en curvas de crecimiento veterinarias.",
+    "url": "https://petsguia.com/herramientas/predictor-peso/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "publisher": {"@type": "Organization", "name": "PetsGuía", "url": "https://petsguia.com"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuánto va a pesar mi cachorro cuando sea adulto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El peso adulto depende de la raza y el tamaño. Los perros pequeños alcanzan su peso adulto entre los 9-12 meses, los medianos entre los 12-15 meses, los grandes a los 15-18 meses y los gigantes pueden seguir creciendo hasta los 24 meses. Usando el peso actual y la edad, se puede estimar el peso final con curvas de crecimiento."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿A qué edad dejan de crecer los perros?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Las razas pequeñas dejan de crecer entre los 9 y 12 meses. Las razas medianas entre los 12 y 15 meses. Las razas grandes entre los 15 y 18 meses. Las razas gigantes (Gran Danés, San Bernardo) pueden seguir creciendo hasta los 18-24 meses."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿La fórmula de duplicar el peso a las 16 semanas es precisa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Es una estimación muy básica que solo funciona para razas medianas. Para razas pequeñas es más preciso triplicar el peso a las 8 semanas, y para razas grandes duplicar el peso a las 16 semanas y sumarle un 25%. Nuestra calculadora usa curvas de crecimiento más precisas según el tamaño de la raza."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Se puede predecir el peso adulto de un cachorro mestizo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Es más difícil pero posible. Si conocés el tamaño aproximado de los padres, podés usar esa referencia. Observá el tamaño de las patas: patas grandes suelen indicar un perro grande. Nuestra calculadora permite seleccionar el tamaño estimado para mestizos y dar una aproximación."
+        }
+      }
+    ]
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3904107966422584" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Pets<span>Guía</span></a>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/herramientas/">Herramientas</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="tool-hero">
+    <div class="tool-hero-content">
+      <span class="tool-badge">📏 Calculadora gratuita</span>
+      <h1>¿Cuánto va a pesar tu <em>cachorro</em> de adulto?</h1>
+      <p>Estimación basada en curvas de crecimiento veterinarias por raza y tamaño.</p>
+    </div>
+  </section>
+
+  <div class="tool-container">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> › <a href="/herramientas/">Herramientas</a> › Predictor de peso adulto
+    </div>
+
+    <!-- FORM -->
+    <div class="tool-card">
+      <h2>Ingresá los datos de tu cachorro</h2>
+
+      <div class="form-group">
+        <label for="raza">Raza</label>
+        <select id="raza" class="form-select">
+          <option value="">Cargando razas...</option>
+        </select>
+        <small>Si tu cachorro es mestizo, seleccioná "Mestizo" y elegí el tamaño estimado.</small>
+      </div>
+
+      <div class="form-group" id="tamanoGroup" style="display:none;">
+        <label for="tamano">Tamaño estimado del adulto</label>
+        <select id="tamano" class="form-select">
+          <option value="pequeño">Pequeño (menos de 10 kg)</option>
+          <option value="mediano" selected>Mediano (10-25 kg)</option>
+          <option value="grande">Grande (25-45 kg)</option>
+          <option value="gigante">Gigante (más de 45 kg)</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="edadMeses">Edad actual (meses)</label>
+          <select id="edadMeses" class="form-select">
+            <option value="">Seleccioná</option>
+            <option value="2">2 meses</option>
+            <option value="3">3 meses</option>
+            <option value="4">4 meses</option>
+            <option value="5">5 meses</option>
+            <option value="6">6 meses</option>
+            <option value="7">7 meses</option>
+            <option value="8">8 meses</option>
+            <option value="9">9 meses</option>
+            <option value="10">10 meses</option>
+            <option value="11">11 meses</option>
+            <option value="12">12 meses</option>
+            <option value="14">14 meses</option>
+            <option value="16">16 meses</option>
+            <option value="18">18 meses</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pesoActual">Peso actual (kg)</label>
+          <input type="number" id="pesoActual" class="form-select" placeholder="Ej: 5.5" min="0.1" max="80" step="0.1"/>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="calcular()">
+        📏 Predecir peso adulto
+      </button>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-card" id="resultado" style="display:none;">
+      <div class="result-main">
+        <div class="result-number" id="resPeso">--</div>
+        <div class="result-unit">kg estimados de adulto</div>
+        <div class="result-label" id="resRango"></div>
+      </div>
+
+      <div class="pred-grid">
+        <div class="pred-grid-item">
+          <div class="val" id="resPesoActual">--</div>
+          <div class="lbl">Peso actual</div>
+        </div>
+        <div class="pred-grid-item">
+          <div class="val" id="resPorcentaje">--</div>
+          <div class="lbl">% de crecimiento</div>
+        </div>
+        <div class="pred-grid-item">
+          <div class="val" id="resFalta">--</div>
+          <div class="lbl">Le falta crecer</div>
+        </div>
+      </div>
+
+      <div class="progress-visual">
+        <div class="progress-label">
+          <span>Nacimiento</span>
+          <span id="resEdadMeta">Adulto</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressBar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="size-info" id="sizeInfo"></div>
+
+      <div class="method-note">
+        <strong>⚠️ Nota:</strong> Esta es una estimación basada en promedios de crecimiento por tamaño de raza. El peso real puede variar según genética, alimentación, salud y si fue esterilizado/a. Consultá con tu veterinario para un seguimiento preciso.
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div class="tool-card" style="padding:0;border:none;background:none;margin-top:32px;">
+        <h2 style="padding:0 0 16px;border-bottom:2px solid var(--border);">Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Cuánto va a pesar mi cachorro cuando sea adulto?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">El peso adulto depende de la raza y el tamaño. Los perros pequeños alcanzan su peso adulto entre los 9-12 meses, los medianos entre los 12-15 meses, los grandes a los 15-18 meses y los gigantes pueden seguir creciendo hasta los 24 meses. Usando el peso actual y la edad, se puede estimar el peso final con curvas de crecimiento.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿A qué edad dejan de crecer los perros?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Las razas pequeñas dejan de crecer entre los 9 y 12 meses. Las razas medianas entre los 12 y 15 meses. Las razas grandes entre los 15 y 18 meses. Las razas gigantes (Gran Danés, San Bernardo) pueden seguir creciendo hasta los 18-24 meses.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿La fórmula de duplicar el peso a las 16 semanas es precisa?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Es una estimación muy básica que solo funciona para razas medianas. Para razas pequeñas es más preciso triplicar el peso a las 8 semanas, y para razas grandes duplicar el peso a las 16 semanas y sumarle un 25%. Nuestra calculadora usa curvas de crecimiento más precisas según el tamaño de la raza.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">¿Se puede predecir el peso adulto de un cachorro mestizo?</button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Es más difícil pero posible. Si conocés el tamaño aproximado de los padres, podés usar esa referencia. Observá el tamaño de las patas: patas grandes suelen indicar un perro grande. Nuestra calculadora permite seleccionar el tamaño estimado para mestizos y dar una aproximación.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO SEO -->
+    <div class="tool-info">
+      <h2>¿Cómo funciona el predictor de peso adulto?</h2>
+      <p>Nuestra herramienta utiliza <strong>curvas de crecimiento veterinarias</strong> que describen qué porcentaje de su peso adulto ha alcanzado un cachorro a cada edad, según el tamaño de su raza:</p>
+      <ul>
+        <li><strong>Razas pequeñas (Chihuahua, Yorkshire):</strong> crecen rápido y alcanzan el 100% a los 10-12 meses.</li>
+        <li><strong>Razas medianas (Beagle, Cocker):</strong> maduran entre los 12-15 meses.</li>
+        <li><strong>Razas grandes (Labrador, Pastor Alemán):</strong> crecen hasta los 15-18 meses.</li>
+        <li><strong>Razas gigantes (Gran Danés, San Bernardo):</strong> pueden seguir creciendo hasta los 24 meses.</li>
+      </ul>
+      <p>Con el peso actual de tu cachorro y su edad, calculamos qué porcentaje de crecimiento ya completó y extrapolamos el peso final estimado.</p>
+
+      <h2>Factores que afectan el peso adulto</h2>
+      <ul>
+        <li><strong>Genética:</strong> el factor más importante. Los padres determinan en gran medida el tamaño final.</li>
+        <li><strong>Alimentación:</strong> una dieta balanceada para cachorro favorece un crecimiento óptimo.</li>
+        <li><strong>Esterilización:</strong> puede afectar ligeramente el metabolismo y peso final.</li>
+        <li><strong>Salud:</strong> parásitos intestinales u otras condiciones pueden retrasar el crecimiento.</li>
+      </ul>
+    </div>
+
+    <div class="cta-card">
+      <h3>¿Querés saber cuánto alimento necesita?</h3>
+      <p>Usá nuestra calculadora de alimentación para ajustar la ración según el peso y edad de tu cachorro.</p>
+      <a href="/herramientas/calculadora-alimentacion/">Calcular alimentación</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">PetsGuía</span>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/herramientas/">Herramientas</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/contacto.html">Contacto</a>
+        <a href="/aviso-legal.html">Aviso Legal</a>
+      </div>
+      <span class="footer-copy">© 2026 PetsGuía. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script>
+  let razas = [];
+
+  /*
+   * Curvas de crecimiento: porcentaje de peso adulto alcanzado a cada mes.
+   * Fuente: promedios veterinarios (Hawthorne et al., 2004; Salt et al., 2017).
+   */
+  const CURVAS = {
+    pequeño:  {2:0.28, 3:0.40, 4:0.52, 5:0.63, 6:0.73, 7:0.81, 8:0.87, 9:0.92, 10:0.96, 11:0.98, 12:1.0, 14:1.0, 16:1.0, 18:1.0, madurez:12},
+    mediano:  {2:0.22, 3:0.33, 4:0.44, 5:0.54, 6:0.63, 7:0.71, 8:0.78, 9:0.84, 10:0.89, 11:0.93, 12:0.96, 14:0.99, 16:1.0, 18:1.0, madurez:14},
+    grande:   {2:0.17, 3:0.27, 4:0.37, 5:0.46, 6:0.55, 7:0.63, 8:0.70, 9:0.76, 10:0.81, 11:0.85, 12:0.89, 14:0.94, 16:0.97, 18:1.0, madurez:18},
+    gigante:  {2:0.12, 3:0.20, 4:0.29, 5:0.37, 6:0.45, 7:0.53, 8:0.60, 9:0.66, 10:0.71, 11:0.76, 12:0.80, 14:0.87, 16:0.92, 18:0.96, madurez:22},
+    variable: {2:0.22, 3:0.33, 4:0.44, 5:0.54, 6:0.63, 7:0.71, 8:0.78, 9:0.84, 10:0.89, 11:0.93, 12:0.96, 14:0.99, 16:1.0, 18:1.0, madurez:14}
+  };
+
+  async function init() {
+    try {
+      const r = await fetch('/data/razas-perros.json');
+      razas = await r.json();
+    } catch(e) {
+      console.warn('Error cargando razas:', e);
+    }
+
+    const sel = document.getElementById('raza');
+    sel.innerHTML = '<option value="">Seleccioná una raza</option>';
+    sel.innerHTML += '<option value="mestizo">🐕 Mestizo (no sé la raza)</option>';
+    razas.forEach(r => {
+      sel.innerHTML += '<option value="'+r.id+'">'+r.nombre+'</option>';
+    });
+
+    sel.addEventListener('change', function() {
+      document.getElementById('tamanoGroup').style.display = this.value === 'mestizo' ? 'block' : 'none';
+    });
+  }
+
+  function getTamano(razaId) {
+    if (razaId === 'mestizo') return document.getElementById('tamano').value;
+    const raza = razas.find(r => r.id === razaId);
+    return raza ? raza.tamano : 'mediano';
+  }
+
+  function getRazaNombre(razaId) {
+    if (razaId === 'mestizo') return 'Mestizo';
+    const raza = razas.find(r => r.id === razaId);
+    return raza ? raza.nombre : razaId;
+  }
+
+  function getPesoRaza(razaId) {
+    const raza = razas.find(r => r.id === razaId);
+    return raza ? { min: raza.peso_min, max: raza.peso_max } : null;
+  }
+
+  function interpolate(curva, meses) {
+    const puntos = Object.keys(curva).filter(k => k !== 'madurez').map(Number).sort((a,b) => a-b);
+    if (meses <= puntos[0]) return curva[puntos[0]];
+    if (meses >= puntos[puntos.length-1]) return curva[puntos[puntos.length-1]];
+    for (let i = 0; i < puntos.length - 1; i++) {
+      if (meses >= puntos[i] && meses <= puntos[i+1]) {
+        const t = (meses - puntos[i]) / (puntos[i+1] - puntos[i]);
+        return curva[puntos[i]] + t * (curva[puntos[i+1]] - curva[puntos[i]]);
+      }
+    }
+    return curva[puntos[puntos.length-1]];
+  }
+
+  function calcular() {
+    const razaId = document.getElementById('raza').value;
+    const edadMeses = parseInt(document.getElementById('edadMeses').value);
+    const pesoActual = parseFloat(document.getElementById('pesoActual').value);
+
+    if (!razaId || !edadMeses || !pesoActual || pesoActual <= 0) {
+      alert('Por favor completá todos los campos.');
+      return;
+    }
+
+    const tamano = getTamano(razaId);
+    const curva = CURVAS[tamano] || CURVAS.mediano;
+    const pctActual = interpolate(curva, edadMeses);
+    const pesoEstimado = pesoActual / pctActual;
+    const pesoMin = Math.round(pesoEstimado * 0.9 * 10) / 10;
+    const pesoMax = Math.round(pesoEstimado * 1.1 * 10) / 10;
+    const pesoMid = Math.round(pesoEstimado * 10) / 10;
+    const pctNum = Math.round(pctActual * 100);
+    const falta = Math.round((pesoEstimado - pesoActual) * 10) / 10;
+
+    // Show result
+    document.getElementById('resultado').style.display = 'block';
+    document.getElementById('resPeso').textContent = pesoMid;
+    document.getElementById('resRango').textContent = 'Rango estimado: ' + pesoMin + ' – ' + pesoMax + ' kg';
+    document.getElementById('resPesoActual').textContent = pesoActual + ' kg';
+    document.getElementById('resPorcentaje').textContent = pctNum + '%';
+    document.getElementById('resFalta').textContent = falta > 0 ? '+' + falta + ' kg' : 'Ya adulto';
+    document.getElementById('resEdadMeta').textContent = 'Adulto (~' + curva.madurez + ' meses)';
+
+    // Progress bar
+    const bar = document.getElementById('progressBar');
+    bar.style.width = pctNum + '%';
+    bar.textContent = pctNum + '%';
+    bar.className = 'progress-fill ' + (pctNum < 50 ? 'low' : pctNum < 80 ? 'mid' : 'high');
+
+    // Size info
+    const tamLabels = {pequeño:'Pequeño',mediano:'Mediano',grande:'Grande',gigante:'Gigante',variable:'Variable'};
+    let info = '<strong>Raza:</strong> ' + getRazaNombre(razaId) + '<br>';
+    info += '<strong>Categoría:</strong> ' + (tamLabels[tamano]||tamano) + '<br>';
+    info += '<strong>Madurez esperada:</strong> ~' + curva.madurez + ' meses<br>';
+
+    const pesoRaza = getPesoRaza(razaId);
+    if (pesoRaza) {
+      info += '<strong>Rango típico de la raza:</strong> ' + pesoRaza.min + ' – ' + pesoRaza.max + ' kg<br>';
+      if (pesoMid < pesoRaza.min * 0.8) {
+        info += '<br>⚠️ La estimación está por debajo del rango típico de la raza. Tu cachorro podría ser más pequeño de lo habitual, o el peso actual aún es bajo para su edad.';
+      } else if (pesoMid > pesoRaza.max * 1.2) {
+        info += '<br>⚠️ La estimación está por encima del rango típico. Tu cachorro podría ser más grande de lo habitual, o podría estar con sobrepeso.';
+      } else {
+        info += '<br>✅ La estimación está dentro del rango esperado para esta raza.';
+      }
+    }
+
+    document.getElementById('sizeInfo').innerHTML = info;
+
+    document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+
+  init();
+  </script>
+</body>
+</html>
