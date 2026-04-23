@@ -603,6 +603,7 @@
     .icon-lg { width: 20px; height: 20px; vertical-align: -4px; }
     .icon-xl { width: 24px; height: 24px; vertical-align: -5px; }
     @media(max-width:700px){ .tools-grid{ grid-template-columns:1fr !important; } }
+    @media(max-width:600px){ .intro-pillars{ grid-template-columns:1fr !important; } .trust-grid{ grid-template-columns:1fr !important; } }
   </style>
 </head>
 <body>
@@ -644,6 +645,31 @@
         Espacio publicitario — Google AdSense 728×90
       </div>
     </div>
+
+    <!-- INTRO EDITORIAL -->
+    <section style="padding:48px 24px 0;">
+      <div style="max-width:860px;margin:0 auto;">
+        <h2 style="font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.8rem);font-weight:700;text-align:center;margin-bottom:12px;">Información confiable para quienes cuidan mascotas</h2>
+        <p style="text-align:center;color:var(--ink2);max-width:640px;margin:0 auto 28px;font-size:0.95rem;line-height:1.7;">En PetsGuía creemos que un dueño informado es el mejor aliado de su mascota. Publicamos guías prácticas, revisamos fuentes veterinarias reconocidas y construimos herramientas útiles para que puedas tomar mejores decisiones sobre la salud, alimentación y bienestar de tu compañero animal.</p>
+        <div class="intro-pillars" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center;">
+          <div style="padding:20px;">
+            <div style="font-size:2rem;margin-bottom:8px;">📋</div>
+            <h3 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:6px;">Basado en evidencia</h3>
+            <p style="font-size:0.82rem;color:var(--ink2);line-height:1.5;">Cada artículo cita fuentes veterinarias como la WSAVA, AVMA y publicaciones especializadas. Nada de mitos ni información sin respaldo.</p>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-size:2rem;margin-bottom:8px;">🐾</div>
+            <h3 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:6px;">Para todas las mascotas</h3>
+            <p style="font-size:0.82rem;color:var(--ink2);line-height:1.5;">Perros, gatos, aves, reptiles, conejos, erizos, hurones y más. Cubrimos las necesidades de cada especie con guías específicas.</p>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-size:2rem;margin-bottom:8px;">🔧</div>
+            <h3 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:6px;">Herramientas gratuitas</h3>
+            <p style="font-size:0.82rem;color:var(--ink2);line-height:1.5;">Calculadoras, verificadores y comparadores que te dan respuestas al instante. Sin registro, sin costo, sin publicidad invasiva.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- HERRAMIENTAS SECTION -->
     <section id="tools-section" style="background:var(--ink);padding:48px 24px;">
@@ -784,6 +810,33 @@
         </aside>
       </div>
     </div>
+
+    <!-- EDITORIAL: POR QUÉ CONFIAR -->
+    <section style="background:var(--surface2);padding:52px 24px;">
+      <div style="max-width:860px;margin:0 auto;">
+        <h2 style="font-family:var(--font-display);font-size:clamp(1.3rem,3vw,1.7rem);font-weight:700;text-align:center;margin-bottom:24px;">¿Por qué confiar en PetsGuía?</h2>
+        <div class="trust-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div style="background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border);">
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px;">🔍 Proceso editorial riguroso</h3>
+            <p style="font-size:0.85rem;color:var(--ink2);line-height:1.65;">Cada artículo pasa por investigación, redacción, verificación de datos y revisión final antes de publicarse. Contrastamos la información con al menos dos fuentes veterinarias reconocidas y actualizamos el contenido cuando surgen nuevas directrices.</p>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border);">
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px;">📚 Fuentes que podés verificar</h3>
+            <p style="font-size:0.85rem;color:var(--ink2);line-height:1.65;">Al final de cada artículo incluimos las fuentes consultadas: WSAVA, AVMA, AAFP, AAV, Manual Merck de Veterinaria y publicaciones científicas. No pedimos que confíes a ciegas — podés comprobar cada dato.</p>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border);">
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px;">⚕️ No reemplazamos al veterinario</h3>
+            <p style="font-size:0.85rem;color:var(--ink2);line-height:1.65;">Lo decimos en cada artículo y lo sostenemos: nuestro contenido es educativo. Ante cualquier problema de salud de tu mascota, la primera respuesta siempre es consultar a un profesional. Somos un complemento, no un sustituto.</p>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border);">
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:8px;">💬 Contenido en español, sin vueltas</h3>
+            <p style="font-size:0.85rem;color:var(--ink2);line-height:1.65;">La buena información sobre mascotas está mayormente en inglés. Nosotros la hacemos accesible en español, con lenguaje claro y directo, sin jerga innecesaria ni relleno. Guías que van al punto y que podés aplicar hoy.</p>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:24px;font-size:0.88rem;color:var(--ink2);">Conocé más sobre nuestro equipo y metodología en <a href="/acerca-de.html" style="color:var(--accent);font-weight:600;">Acerca de PetsGuía</a>.</p>
+      </div>
+    </section>
+
   </div>
 
   <!-- ARTICLE PAGE -->
